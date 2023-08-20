@@ -1,0 +1,106 @@
+.join_us{
+    width: 1100px;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.outLoginTable{
+    width: 1100px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0px 10px 0px 10px;
+    font-size: 20px;
+}
+.outLoginTable .outLogin{
+    line-height: 30px;
+    padding: 5px;
+    border-bottom: 1px solid black;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.outLogin_container{
+	display: flex;	
+}
+
+.outLoginTable .naver_join,
+.outLoginTable .kakao_join{
+	background-color: #ffffff;
+    border: 1px solid;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin: 5px;	
+}
+
+.outLoginTable .kakao_join img,
+.outLoginTable .naver_join img{
+	width: 20px;
+    height: 20px;
+    vertical-align: sub;	
+}
+
+#btnOverlapped{
+    width: 80px;
+}
+
+
+.basicInf{
+    font-size: 20px;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.join_us_Form{
+	width: 1100px;
+    border-collapse: collapse; /* 테이블과 셀의 경계를 합침 */
+  	border-spacing: 0; /* 테이블과 셀 사이의 간격을 없앰 */
+}
+.join_us_Form .dot_line td{
+    padding: 10px 0;
+    border-top: 1px solid black;
+}
+.join_us_Form .dot_line input{
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.dot_line input[type=text],
+.dot_line input[type=password]{
+    letter-spacing: 1px;
+    padding-left: 5px;
+}
+
+
+#zipcode,
+#address,
+#subaddress{
+    margin-bottom: 7px;
+}
+
+.dot_line:nth-of-type(6) td{
+    border-bottom: 1px solid;
+}
+
+.search_address_btn{
+	width: 70px;
+    line-height: 20px;
+    display: inline-block;
+    background-color: #a9a9a942;
+    font-size: 12px;
+    text-align: center;
+}
+
+#join_us_btn{
+	width: 400px;
+    height: 50px;
+    border: none;
+    font-size: 17px;
+    font-weight: 600;
+    background-color: rgb(58, 58, 59);
+    color: #ffffff;
+    cursor: pointer;
+}

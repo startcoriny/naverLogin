@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.cart">
+
+	<!-- 리절트 맵 정의 -->
+	<resultMap id="cartResult" type="CartVO">
+		<result property="memberId" column="member_id" /> <!-- 회원 아이디 -->
+		<result property="goodsId" column="goods_id" /> <!-- 상품번호 -->
+		<result property="cartId" column="cart_id" /> <!-- 장바구니번호 -->
+		<result property="cartGoodsQty" column="cart_goods_qty" /> <!-- 상품개수 -->
+		<result property="creDate" column="creDate" /> <!-- 생성일자 -->
+	</resultMap>
+	
+	<resultMap id="goodsResult" type="goodsVO">
+		<result property="goodsId" column="goods_id" /> <!-- 상품번호 -->
+		<result property="goodsSort" column="goods_Sort" /> <!-- 카테고리 -->
+		<result property="goodsStatus" column="goods_Status" /> <!-- 상품분류 -->
+		<result property="goodsTitle" column="goods_Title" /> <!-- 상품제목 -->
+		<result property="goodsWriterIntro" column="goods_Writer_Intro" /> <!-- 상품소개 -->
+		<result property="goodsSalesPrice" column="goods_Sales_Price" /> <!-- 상품판매가격 -->
+		<result property="goodsDeliveryPrice" column="goods_Delivery_Price" /> <!-- 배송비 -->
+		<result property="goodsDeliveryDate" column="goods_Delivery_Date" /> <!-- 상품배송일 -->
+ 	    <result property="goodsFileName" column="goodsfileName" /> <!-- 이미지 파일명 -->
+ 	    <result property="goodsCreDate" column="goodscredate" /> <!-- 상품생성일 -->
+	</resultMap>	
+
+
+
+
+
+	<!-- 장바구니 목록 조회 쿼리 -->
+	<select id="selectCartList"  parameterType="cartVO"  resultMap="cartResult"   >
+		<![CDATA[
+			select cart_id, goods_id, member_id, cart_goods_qty, creDate 
+			from t_shopping_cart 
+			where member_id=#{memberId} 
+		]]>
+	</select>
+
+
+
+
+	<!-- 상품 목록 조회 쿼리 -->
+	<!-- foreach : 리스트(collection)안에 있는 아이템들을 쿼리의 in절에 사용하는 부분 -->
+	<!-- in 절은 데이터 베이스 쿼리에서 여러 값들을 비교할 때 사용되는데 이때 각 값들을 쉼표로 구분하여 나열 -->
+	<!-- item : 리스트 (collection)내 각 아이템을 지징할 이름 지정 , collection : 반복하려는 리스트의 이름을 지정-->
+	<!-- open : 반복이 시작될 때 삽입할 문자열을 지정, separator : 아이템들 사이에 삽입할 문자열을 지정, close : 반복이 끝날 때 삽입할 문자열을 지정 -->
+	<!-- 쿼리에서 g.goods_id in 조건을 사용하여, list 안에 있는 상품 아이디들이 IN 절에 포함되도록 설정되고, 
+		   각 아이템의 goodsId 필드 값을 쉼표로 구분하여 IN 절에 넣어 쿼리가 실행될 때 여러 상품 아이디 비교 -->
+	<select id="selectGoodsList" resultMap="goodsResult" parameterType="java.util.Map">
+    	<![CDATA[
+        	select g.*,d.fileName from t_shopping_goods g, t_goods_detail_image d
+          	where g.goods_id=d.goodsId
+          	and d.filetype='main_image'
+           	and g.goods_id in
+    	]]>
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item.goodsId}
+		</foreach>
+			order by g.GOODSCREDATE desc
+	</select>
+
+
+
+
+	<!-- 장바구니에 해당 상품이 있는지 확인하는 쿼리 -->
+	<select id="selectCountInCart" resultType="String" parameterType="cartVO">
+		<![CDATA[
+			select decode(count(*), 0, 'false', 'true') from t_shopping_cart
+			where goods_id=#{goodsId}
+			and member_id=#{memberId} 
+    	]]>
+	</select>
+
+
+
+
+	<!-- 장바구니에 상품 추가하는 쿼리 -->
+	<insert id="insertGoodsInCart" parameterType="cartVO">
+		<![CDATA[
+			insert into t_shopping_cart(cart_id,
+		    	                        goods_id,
+		    	                        member_id,
+		    	                        cart_goods_qty)
+		        				 values(#{cartId},
+    							        #{goodsId},
+    							        #{memberId},
+    							        #{cartGoodsQty})
+    	]]>
+	</insert>
+
+
+
+
+	<!-- 장바구니에서 상품 수량 업데이트하는 쿼리 -->
+	<update id="updateCartGoodsQty" parameterType="cartVO">
+	    <![CDATA[
+			update t_shopping_cart
+			       set cart_goods_qty=#{cart_goods_qty}
+		 	       where member_id=#{member_id}
+			        and goods_id=#{goods_id}
+    	]]>
+	</update>
+
+
+
+
+	<!-- 장바구니에서 상품 삭제하는 쿼리 -->
+	<delete id="deleteCartGoods" parameterType="int">
+	    <![CDATA[
+	      delete from t_shopping_cart
+	      where cart_Id=#{cartId}
+    	]]>
+	</delete>
+	
+	
+	
+	
+	<!-- 장바구니의 최대 cart_id 조회하는 쿼리 -->
+	<!-- t_shopping_cart 테이블에서 가장 큰 cart_id 값을 조회하고, nvl 함수를 사용하여 값이 null인 경우에는 0을 반환, 그리고 조회한 값에 1을 더하여 새로운 장바구니 아이디를 생성 -->
+	<select id="selectMaxCartId" resultType="int">
+	    <![CDATA[
+			select nvl(max(cart_id), 0) + 1 from t_shopping_cart 
+    	]]>
+	</select>
+
+</mapper>

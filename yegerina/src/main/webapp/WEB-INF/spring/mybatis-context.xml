@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+<!-- 데이터베이스와 연동하여 작업을 수행하고 트랜잭션을 관리하는 데 필요한 빈들을 구성 -->
+	
+	<!-- AOP (Aspect-Oriented Programming)(관점 지향 프로그래밍)을 지원하는 설정 요소 -->
+	<!-- 아래의 설정을 사용하면 AspectJ 스타일의 AOP를 적용할 수 있음  -->
+	<!-- 자동으로 Spring 빈들에 대한 AOP 프록시를 생성하고 관리 -->
+	<!-- AOP를 활용하여 코드의 모듈화와 재사용성을 높이고, 
+			횡단 관심사를 분리하여 애플리케이션을 더 효율적으로 개발  -->
+	<!-- AOP는 애플리케이션의 여러 부분에 걸쳐 반복적으로 나타나는 횡단 관심사 (cross-cutting concern)를 
+			모듈화하고 재사용하는 프로그래밍 패러다임 -->
+	<!-- 로깅, 보안, 트랜잭션 관리 등과 같은 관심사를 분리하여 코드의 중복을 줄이고 유지보수성을 향상 -->
+	
+	<!-- AOP 자동 프록시 설정 활성화 -->
+	<aop:aspectj-autoproxy />
+	
+	
+	<!-- 프로퍼티 값을 참조하기 위한 PropertyPlaceholderConfigurer 설정 -->
+	<!-- PropertyPlaceholderConfigurer 빈을 등록하여 애플리케이션에서 value의 파일을 읽어와
+			프로퍼티값들을 참조할수 있도록 도와줌 -->
+	<!-- 이렇게 함으로써 애플리케이션의 설정을 외부 파일에 분리하여 관리하고 유연성을 확보 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		
+		<!-- 빈의 프로퍼티를 설정하는 요소 -->
+		<property name="locations">
+			<list>
+				<!-- 프로퍼티의 값으로 사용될 값을 지정 -->
+				<value>/WEB-INF/config/jdbc/jdbc.properties</value>
+				<value>/WEB-INF/config/static/api.properties</value>
+			</list>
+		</property>
+
+	</bean>
+
+
+
+	
+	<!-- 데이터베이스 연결을 위한 PooledDataSource 설정 -->
+	<!-- PooledDataSource 빈을 등록하여 데이터베이스 연결 정보를 설정하고 PooledDataSource를 사용하여 데이터베이스 연결을 관리 -->
+	<!-- 데이터베이스와의 연결을 효율적으로 관리하고 성능을 최적화 -->
+	<!-- bean id = 빈의 고유한 식별자를 지정 , class = PooledDataSource 클래스를 사용 -->
+	<!-- PropertyPlaceholderConfigurer를 사용하면 PooledDataSource 클래스가 자동으로 설정된 프로퍼티 값을 참조 -->
+	<bean id="dataSource" class="org.apache.ibatis.datasource.pooled.PooledDataSource">
+		
+		<!-- name = 프로퍼티의 이름을 지정 , value = 프로퍼티 플레이스홀더를 사용하여 프로퍼티 값을 참조 -->
+		<property name="driver" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+
+	
+	<!-- MyBatis SqlSessionFactory 설정 -->
+	<!-- 데이터베이스 연결 및 SQL 매퍼 설정을 포함 -->
+	<!-- MyBatis를 사용하여 데이터베이스와 상호 작용하고 SQL 세션을 생성할 수 있게 됨 -->
+	<!-- MyBatis와 Spring을 함께 사용할 때 데이터베이스 연결과 SQL 매퍼 설정을 편리하게 관리할 수 있도록 도와주는 역할 -->
+	<!-- MyBatis와 통합된 클래스 -->
+	<bean id ="sqlSessionFactory" class= "org.mybatis.spring.SqlSessionFactoryBean" >
+	    
+	    <!-- 데이터베이스 연결 정보를 설정 -->
+	    <property name="dataSource" ref="dataSource" />
+	    
+	    <!-- MyBatis의 설정 파일 (mybatis-config.xml)의 위치를 지정 -->
+	    <property name="configLocation" value="classpath:mybatis/models/modelConfig.xml"  />
+	  	
+	  	<!-- SQL 매퍼 파일들의 위치를 지정 -->
+	  	<!-- MyBatis는 지정된 경로 패턴에 맞는 SQL 매퍼 파일들을 찾아서 로드하여 사용 -->
+	  	<!-- SQL 매퍼 파일은 데이터베이스 작업의 정의와 매핑을 관리하며, 이를 통해 데이터베이스 쿼리를 관리하고 수행 -->
+	  	<property name="mapperLocations" value="classpath:mybatis/mappers/*.xml" />
+	</bean >
+	
+	
+	
+	
+	<!-- 트랜잭션 관리를 위한 DataSourceTransactionManager 설정 -->
+	<!-- 데이터베이스 트랜잭션을 시작하고 관리하는 역할 -->
+	<!-- 데이터베이스 작업을 트랜잭션 단위로 관리하고 롤백 등의 트랜잭션 처리를 자동으로 수행 -->
+	<!-- 애플리케이션에서 데이터베이스 작업을 안전하게 처리하고 예외 상황에 대비 -->
+	<bean id ="transactionManager" class= "org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+	    <property name ="dataSource" ref= "dataSource"></property >
+	</bean >
+	
+	
+	
+	<!-- MyBatis SqlSession 설정 -->
+	<!-- SqlSessionTemplate은 트랜잭션 관리와 연계하여 편리한 데이터베이스 작업을 수행할 수 있도록 도와줌 -->
+	<!-- 데이터베이스 작업을 실행하면서 트랜잭션을 자동으로 관리하고, 세션을 열고 닫음으로써 일관성 있는 데이터베이스 작업을 지원 -->
+	<bean id ="sqlSession" class= "org.mybatis.spring.SqlSessionTemplate" >
+	   
+	    <!-- 생성자 인자를 설정하는 요소 - sqlSessionFactory를 생성자 인자로 넘겨줌 -->
+	    <constructor-arg ref= "sqlSessionFactory"></constructor-arg >
+	</bean >
+
+
+</beans>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.mypage">
+<!-- 리절트 맵 정의 -->
+	<resultMap id="orderGoodsResult" type="OrderVO">
+	    <result property="order_seq_num" column="order_seq_num" /> <!-- 주문상품 일련번호 -->
+		<result property="orderId" column="order_id" /> <!-- 주문번호 -->
+		<result property="goodsId" column="goods_id" /> <!-- 상품번호 -->
+		<result property="goodsTitle" column="goods_title" /> <!-- 상품이름 -->
+		<result property="goodsSalesPrice" column="goods_sales_price" /> <!-- 상품판매가격 -->
+		<result property="goodsFileName" column="goods_fileName" /> <!-- 상품이미지파일이름 -->
+		<result property="orderGoodsQty" column="order_goods_qty" /> <!-- 상품주문수량 -->
+		<result property="delivery_state" column="delivery_state" /> <!-- 상품배송상태 -->
+		<result property="memberId" column="member_id" /> <!-- 주문자아이디 -->
+		<result property="orderer_hp" column="orderer_hp" /> <!-- 주문자휴대폰번호 -->
+		<result property="receiver_name" column="receiver_name" /> <!-- 수령자이름 -->
+		<result property="receiver_hp1" column="receiver_hp1" /> <!-- 수령자휴대폰번호 -->
+		<result property="delivery_address" column="delivery_address" /> <!-- 수령자배송주소 -->
+		<result property="pay_method" column="pay_method" /> <!-- 결제방법 -->
+		<result property="card_com_name" column="card_com_name" /> <!-- 결제카드회사이름 -->
+		<result property="pay_orderer_hp_num" column="pay_orderer_hp_num" /> <!-- 결제휴대폰번호 -->
+		<result property="card_pay_month" column="card_pay_month" /> <!-- 결제할부개월수 -->
+		<result property="pay_order_time" column="pay_order_time" /> <!-- 결제시간 -->
+		<result property="delivery_message" column="delivery_message" /> <!-- 배송메세지 -->
+
+	</resultMap>
+	
+	<resultMap id="memberResult" type="memberVO">
+		<result property="memberId" column="memberid" />
+		<result property="memberName" column="membername" />
+		<result property="memberPw" column="memberpw" />
+		<result property="hp1" column="hp1" />		
+		<result property="zipcode" column="zipcode" />
+		<result property="address" column="address" />
+		<result property="subaddress" column="subaddress" />
+		<result property="joinDate" column="joinDate" />
+		<result property="del_yn" column="del_yn" />		
+	</resultMap>		
+	
+	
+	
+	
+	<!-- 회원이 주문한 상품목록을 조회하는 sql 쿼리문 -->
+	<select id="selectMyOrderGoodsList" resultMap="orderGoodsResult"  parameterType="String"  >
+		<![CDATA[
+			select * from t_shopping_order
+            where member_id=#{member_id}
+            order by pay_order_time desc
+		]]>
+	</select>	
+
+
+
+
+	<!-- 회원 정보를 수정하기 위한 sql 쿼리문 -->
+	<!-- 회원 아이디(memberId)에 해당하는 회원의 비밀번호, 전화번호, 우편번호, 주소, 부가주소를 업데이트 -->
+	<update id="updateMyInfo" parameterType="java.util.HashMap">	
+		<![CDATA[ 
+			update t_shopping_member
+			set
+			memberPw=#{memberPw},
+			hp1=#{hp1},
+			zipcode=#{zipcode},
+			address=#{address},
+			subaddress=#{subaddress}
+			where
+			memberId=#{memberId}
+		]]>
+	</update>	
+	
+	
+	
+	
+	<!-- 회원의 상세 정보 조회 sql 쿼리문 -->
+	<select id="selectMyDetailInfo" resultType="memberVO"   parameterType="String"  >
+	    <![CDATA[
+			select * from t_shopping_member 
+			where memberId=#{memberId}
+    	]]>
+	</select>		
+	
+	
+	
+	
+	<!--주문목록조회 sql 쿼리문 -->
+	<select id="selectMyOrderHistoryList" resultMap="orderGoodsResult" parameterType="java.util.Map">
+	    <![CDATA[
+			select * from t_shopping_order
+          	where member_id=#{memberId}
+          	and  to_char(pay_order_time,'yyyy-mm-dd')  between #{beginDate} and #{endDate}
+          	order by pay_order_time desc
+    	]]>
+	</select>
+	
+	
+	<!-- 주문 취소 상태를 업데이트하는 sql 쿼리문 -->
+	<update id="updateMyOrderCancel" parameterType="String">
+	    <![CDATA[
+	   		update t_shopping_order
+	 	  	set delivery_state='cancel_order'
+	   		where order_id=#{orderId}
+    	]]>
+	</update>	
+	
+	<!-- 반품상태를 업데이트하는 sql 쿼리문 -->
+	<update id="updateMyOrderReturn" parameterType="String">
+		<![CDATA[
+			update
+			t_shopping_order
+			set delivery_state='returning_goods'
+			where
+			order_id=#{orderId}
+		]]>
+	</update>
+
+	<!-- 교환상태를 업데이트하는 sql 쿼리문 -->
+	<update id="updateMyOrderExchange" parameterType="String">
+		<![CDATA[
+			update
+			t_shopping_order
+			set delivery_state='exchange_goods'
+			where
+			order_id=#{orderId}
+		]]>
+	</update>	
+	
+	<!-- 회원탈퇴 -->
+	<delete id="deleteMembercart" parameterType="String">
+	    <![CDATA[
+			delete T_SHOPPING_CART
+			where member_Id = #{memberId}
+    	]]>
+	</delete>	
+	<delete id="deleteMemberorder" parameterType="String">
+	    <![CDATA[
+			delete T_SHOPPING_ORDER
+			where member_Id = #{memberId}
+    	]]>
+	</delete>	
+	<!-- 회원탈퇴 -->
+	<delete id="deleteMember" parameterType="String">
+	    <![CDATA[
+			delete T_SHOPPING_MEMBER
+			where memberId = #{memberId}
+    	]]>
+	</delete>	
+	
+	
+	
+	
+		
+</mapper>

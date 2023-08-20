@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+
+<!-- 타일즈 정의(Definitions)를 담는 루트 요소 -->
+<tiles-definitions>
+<!-- 타일즈 정의를 사용하면 페이지의 레이아웃을 구성하고 공통된 부분을 재사용하면서 페이지마다 고유한 내용을 쉽게 삽입할 수 있음 -->
+
+	<!-- 기본 레이아웃 정의 -->
+	<!-- name : 정의의 이름을 지정, tamplate : 기본 레이아웃 템플릿의 경로를 지정 -->
+	<definition name="baseLayout" template="/WEB-INF/views/common/layout.jsp">
+		
+		<!-- put-attribute : 정의 내에서 사용할 속성(attribute)들을 설정하는 요소 -->
+		<!-- 이름(name)과 값(value)을 설정 -->
+		
+		
+		<!-- title 속성에 기본 값을 설정 -->
+		<put-attribute name="title" value="레이아웃 페이지" />
+		
+		<!-- header 속성에 공통 헤더의 경로를 설정 -->
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+		
+		<!-- section 속성에 공통 섹션의 경로를 설정 -->
+		<put-attribute name="section" value="/WEB-INF/views/common/section.jsp" />
+		
+		<!-- body 속성은 초기에는 빈 값으로 설정 -->
+		<put-attribute name="body" value="" />
+		
+		<!-- footer 속성에 공통 푸터의 경로를 설정 -->
+		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+	</definition>
+
+
+	
+	<!-- 메인 페이지 정의, 기본 레이아웃을 확장 -->
+	<!-- extends : 확장하는 기본 정의의 이름을 지정 -->
+	<definition name="/main/main" extends="baseLayout">
+	
+		<!-- title 속성에 메인 페이지 제목을 설정 -->
+		<put-attribute name="title" value="쇼핑몰 메인페이지" />
+		
+		<!-- body 속성에 메인 페이지의 내용을 포함하는 JSP 파일의 경로를 설정 -->
+		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp" />
+	</definition>
+
+    <definition name="/popup/popupContent" template="/WEB-INF/views/popup/popupContent.jsp" />
+    <definition name="/popup/popupContent2" template="/WEB-INF/views/popup/popupdiscount.jsp" />
+    
+</tiles-definitions>
+
+

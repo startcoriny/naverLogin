@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.order">
+<!-- 리절트 맵 정의 -->	
+	<resultMap id="orderGoodsResult" type="OrderVO">
+	    <result property="order_seq_num" column="order_seq_num" /> <!-- 주문상품 일련번호 -->
+		<result property="orderId" column="order_id" /> <!-- 주문번호 -->
+		<result property="goodsId" column="goods_id" /> <!-- 상품번호 -->
+		<result property="goodsTitle" column="goods_title" /> <!-- 상품이름 -->
+		<result property="goodsSalesPrice" column="goods_sales_price" /> <!-- 상품판매가격 -->
+		<result property="goodsFileName" column="goods_fileName" /> <!-- 상품이미지파일이름 -->
+		<result property="orderGoodsQty" column="order_goods_qty" /> <!-- 상품주문수량 -->
+		<result property="delivery_state" column="delivery_state" /> <!-- 상품배송상태 -->
+		<result property="memberId" column="member_id" /> <!-- 주문자아이디 -->
+		<result property="orderer_hp" column="orderer_hp" /> <!-- 주문자휴대폰번호 -->
+		<result property="receiver_name" column="receiver_name" /> <!-- 수령자이름 -->
+		<result property="receiver_hp1" column="receiver_hp1" /> <!-- 수령자휴대폰번호 -->
+		<result property="delivery_address" column="delivery_address" /> <!-- 수령자배송주소 -->
+		<result property="pay_method" column="pay_method" /> <!-- 결제방법 -->
+		<result property="card_com_name" column="card_com_name" /> <!-- 결제카드회사이름 -->
+		<result property="pay_orderer_hp_num" column="pay_orderer_hp_num" /> <!-- 결제휴대폰번호 -->
+		<result property="card_pay_month" column="card_pay_month" /> <!-- 결제할부개월수 -->
+		<result property="pay_order_time" column="pay_order_time" /> <!-- 결제시간 -->
+		<result property="delivery_message" column="delivery_message" /> <!-- 배송메세지 -->
+		
+	</resultMap>
+	
+  	<!-- 주문번호를 생성하기 위한 sql 쿼리문 -->
+    <!-- 다음 주문번호를 생성하기 위해 시퀀스를 사용 -->
+    <!-- dual 테이블로부터 seq_order_id.nextval 값을 가져옴-->
+	<select id="selectOrderID" resultType="int"  >
+		<![CDATA[
+		    select seq_order_id.nextval from dual
+    	]]>
+	</select>
+	
+	<!-- 주문 상품의 일련번호(order_seq_num)를 생성하기 위한 sql 쿼리문 -->
+    <!-- selectKey를 사용하여 주문 상품의 일련번호(order_seq_num)를 생성 한뒤 -->
+    <!-- 생성된 일련번호를 활용하여 주문 정보를 삽입 -->
+	<insert id="insertNewOrder" parameterType="orderVO"  >
+	    <selectKey resultType="int" keyProperty="order_seq_num" order="BEFORE">
+	    	select order_seq_num.nextval from dual
+	    </selectKey>
+	    <![CDATA[
+			insert into t_shopping_order(order_seq_num,
+			                             order_id,
+									     goods_id,
+									     goods_title,
+									     goods_sales_price,
+									     goods_fileName,
+									     order_goods_qty,
+										 member_id,
+									     receiver_name,
+									     receiver_hp1,
+					                     delivery_address,
+					                     delivery_message,
+						                 pay_method,
+						                 card_com_name,
+						                 card_pay_month,
+						                 orderer_hp,
+						                 pay_orderer_hp_num)
+							     values(#{order_seq_num},
+							            #{orderId},
+									    #{goodsId},
+									    #{goodsTitle},
+									    #{goodsSalesPrice},
+									    #{goodsFileName},
+									    #{orderGoodsQty},
+									    #{memberId},
+									    #{receiver_name},
+									    #{receiver_hp1},
+					                    #{delivery_address},
+					                    #{delivery_message},
+						                #{pay_method},
+						                #{card_com_name},
+						                #{card_pay_month},
+						                #{orderer_hp},
+						                #{pay_orderer_hp_num})
+    	]]>
+	</insert>	
+	
+	
+    <!-- 장바구니에서 특정 상품을 삭제하기 위한 쿼리 -->
+	<delete id="deleteGoodsFromCart" parameterType="orderVO">
+	  delete from t_shopping_cart
+	  where goods_id=#{goodsId}
+	</delete>	
+	
+	
+</mapper>

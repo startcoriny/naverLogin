@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.admin.member">
+	<!-- 리절트 맵 정의 -->
+	<resultMap id="memberResult" type="memberVO">
+		<result property="memberName" column="memberName" />
+		<result property="memberId" column="memberId" />
+		<result property="memberPw" column="memberPw" />
+		<result property="hp1" column="hp1" />
+		<result property="zipcode" column="zipcode" />
+		<result property="address" column="address" />
+		<result property="subaddress" column="subAddress" />
+		<result property="joinDate" column="joinDate" />
+		<result property="del_yn" column="del_yn" />
+	</resultMap>
+
+	<select id="listMember" resultMap="memberResult"   parameterType="java.util.HashMap"  >
+	    <![CDATA[
+		select * from (
+			select rowNum as rnum,t.*
+				from(
+					select * from T_SHOPPING_MEMBER
+					where to_char(joinDate,'yyyy-mm-dd') between #{beginDate} and #{endDate}
+					order by joinDate desc
+				) t
+		)
+		where 
+		rnum between (#{section}-1)*100+ (#{pageNum}-1)*5+1 and (#{section}-1)*100+(#{pageNum})*5
+		
+		]]>	        
+	</select>
+
+
+</mapper>

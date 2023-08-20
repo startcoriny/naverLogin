@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.myShoppingmall</groupId>
+	<artifactId>common</artifactId>
+	<name>myShoppingmall</name>
+	<packaging>war</packaging>
+	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<properties>
+		<java-version>1.6</java-version>
+		<org.springframework-version>4.1.1.RELEASE</org.springframework-version>
+		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<org.slf4j-version>1.6.6</org.slf4j-version>
+	</properties>
+
+	<!-- Maven 프로젝트의 pom.xml파일에 의존성을 설정 -->
+	<!-- Maven : Java 프로젝트의 의존성 관리를 도와주는 도구 -->
+	<!-- 프로젝트에서 필요로 하는 라이브러리들을 중앙 저장소에서 자동으로 다운로드하여 프로젝트에 추가하게 됩니다. -->
+	<dependencies>
+	
+		<!-- [오류 원인] 한글때문에 xml 파싱시 오류날 경우 (URI$MalformedURIException 오류) [오류 내역] 
+			com.sun.org.apache.xerces.internal.util.URI$MalformedURIException: Path contains 
+			invalid character: 자 [소스 시작] -->
+
+		<dependency>
+
+			<groupId>xerces</groupId>
+
+			<artifactId>xercesImpl</artifactId>
+
+			<version>2.9.1</version>
+
+		</dependency>
+
+		<!-- [소스 종료] -->
+		
+		<!-- 네이버 아이디 사용하기 위한 DEPENDENCY -->
+		<dependency>
+			<groupId>com.github.scribejava</groupId>
+			<artifactId>scribejava-core</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+			<!-- scribejava-core 라이브러리 : OAuth 1.0 및 OAuth 2.0 인증 프로토콜을 구현하는 데 사용되는 자바 라이브러리 -->
+			<!-- OAuth는 사용자가 서드파티 애플리케이션에 대한 접근 권한을 부여할 때 사용되는 보안 프로토콜 -->
+			<!-- 소셜 미디어 플랫폼과의 연동, API 호출 등에서 사용 -->
+		<!-- 네이버 아이디 사용하기 위한 DEPENDENCY종료 -->
+		
+		   <!-- Jackson 라이브러리 의존성 추가 -->
+	    <dependency>
+	        <groupId>com.fasterxml.jackson.core</groupId>
+	        <artifactId>jackson-databind</artifactId>
+	        <version>2.13.0</version> <!-- 원하는 버전으로 변경 가능 -->
+	    </dependency>
+		
+		
+		
+		
+		
+		
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
+		<!-- JDBC 설정하기 -->
+		<!-- Oracle JDBC 드라이버의 의존성을 설정하는 부분 -->
+		<dependency>
+			<groupId>oracle.jdbc</groupId>
+			<artifactId>OracleDriver</artifactId>
+			<version>12.1.0.2.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</systemPath>
+		</dependency>
+			<!-- Oracle 데이터베이스와 연동하기 위해 필요한 Oracle JDBC 드라이버의 의존성을 설정하는 부분 -->
+			<!-- 해당 드라이버를 시스템 경로에서 찾아서 프로젝트에 추가 -->
+
+		<!-- MySQL JDBC 드라이버의 의존성을 설정하는 부분 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.29</version>
+		</dependency>
+			<!-- Maven 프로젝트에 MySQL JDBC 드라이버 라이브러리를 추가 -->
+			<!-- mysql-connector-java 라이브러리의 5.1.29 버전을 사용하도록 설정 -->
+
+
+
+		<!-- myBatis 설정관련 라이브러리 -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+			<!-- 자바 빈(Java Bean) 프로퍼티들을 쉽게 다룰 수 있는 유틸리티 라이브러리 -->
+
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+			<!-- 데이터베이스 커넥션 풀(Connection Pool) 라이브러리 -->
+			<!-- 데이터베이스 커넥션 관리를 효율적으로 수행하도록 도와줌 -->
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+			<!-- SQL과 저장 프로시저를 매핑한 XML 파일과 자바 언어로 된 POJO(Plain Old Java Object)를 매핑하여 
+				데이터베이스와의 상호작용을 단순화하는 SQL 매핑 프레임워크 -->
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+			<!-- MyBatis-Spring은 MyBatis와 스프링 프레임워크를 통합하여 스프링에서 MyBatis를 편리하게 사용할 수 
+				있도록 도와주는 라이브러리 -->
+
+
+
+
+
+
+		<!-- 코드 생성 라이브러리 -->
+		<!-- sqlSessionFactory 만들때 없으면 에러남 -->
+		<!-- 자바 클래스를 동적으로 생성하거나 수정할 때 사용 -->
+		<!-- 스프링과 같은 프레임워크나 라이브러리들이 동적 프록시(Proxy)를 생성할 때에 cglib을 이용 -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>2.2</version>
+		</dependency>
+			<!-- cglib-nodep : cglib 라이브러리를 기반으로 하지만 라이브러리 자체가 의존하는 라이브러리가 없는 '노드페러시' 
+				버전 -->
+			<!-- cglib-nodep은 자체적으로 라이브러리 의존성을 가지지 않으므로, 프로젝트에서 cglib-nodep만 추가해도 충분 -->
+
+
+
+
+
+
+		<!-- Apache Tiles 라이브러리 -->
+		<!-- Apache Tiles를 사용하면 웹 애플리케이션에서 화면 구성을 모듈화하고 템플릿을 재사용할 수 있어 개발 및 유지보수 
+			편리 -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-core</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+			<!-- tiles-core : Apache Tiles의 핵심 기능을 제공하는 모듈 -->
+			<!-- 레이아웃 구성 및 타일(조각) 관리 등의 기능이 이 모듈에 포함 -->
+
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+			<!-- JSP용 Apache Tiles 모듈 -->
+			<!-- JSP 템플릿과 Tiles를 함께 사용할 때 필요한 기능을 제공 -->
+
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+			<!-- 서블릿용 Apache Tiles 모듈 -->
+			<!-- 서블릿 기반 웹 애플리케이션에서 Tiles를 사용할 때 필요한 기능을 제공 -->
+
+
+
+
+		<!-- Apache Commons 라이브러리의 의존성을 추가 -->		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+			<!-- commons-io : Apache Commons 프로젝트의 일부로서, 파일 입출력, 스트림 처리, 파일 복사 등의 유용한 
+				기능을 제공하는 라이브러리 -->
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+			<!-- commons-fileupload : 웹 애플리케이션에서 파일 업로드를 처리하는 데 사용되는 라이브러리 -->
+		
+		<!-- Apache Commons 라이브러리의 의존성을 추가 -->
+
+
+
+		<!-- jquery 라이브러리 -->
+		<!-- jQuery : 웹 애플리케이션에서 자바스크립트 기능을 보다 쉽게 다룰 수 있도록 도와주는 라이브러리 -->
+		<!-- HTML 문서 조작, 이벤트 처리, Ajax 요청 등 다양한 기능을 제공 -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<!-- org.webjars : 웹 애플리케이션에서 자바스크립트 라이브러리와 CSS 라이브러리를 Maven을 통해 관리하고 의존성으로 
+			사용할 수 있도록 지원하는 프로젝트 -->
+
+
+
+		<!-- 썸네일 기능 -->
+		<!-- 자바를 이용하여 이미지의 썸네일을 생성하는 라이브러리 -->
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
+		</dependency>
+		<!-- 이미지 크기 조정, 회전, 자르기 등 다양한 기능을 제공. 이를 통해 웹 애플리케이션에서 사용자에게 보여줄 썸네일 이미지를 
+			생성 -->
+		<!-- 이미지 관련 작업을 보다 편리하게 처리 -->
+
+
+
+		<!-- json -->
+		<!-- JSON 데이터를 다루는 데 사용되는 라이브러리 -->
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+		</dependency>
+		<!-- JSON 객체를 생성하고 파싱하는 기능을 제공 -->
+		<!-- JSON은 자바스크립트 객체 표기법으로 데이터를 표현하는 형식으로, 웹 애플리케이션에서 데이터를 교환하는 데 많이 사용 -->
+		<!-- json-lib : Java 객체와 JSON 데이터 사이의 변환을 쉽게 처리할 수 있으며, 웹 애플리케이션에서 서버와 
+			클라이언트 간 데이터 교환 시에 유용하게 활용 -->
+
+
+
+		<!-- AOP -->
+		<!-- AOP : Aspect-Oriented Programming(관점 지향 프로그래밍)의 약자 -->
+		<!-- 소프트웨어를 설계할 때, 비즈니스 로직과 공통 모듈(로깅, 트랜잭션, 보안 등)을 분리하여 개발하는 프로그래밍 패러다임 -->
+		<!-- 여러 모듈에서 반복적으로 사용되는 공통 부분을 별도의 모듈로 분리하고, 이를 필요로 하는 곳에서 자연스럽게 적용 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- spring-aop 라이브러리 : Spring AOP는 프록시를 사용하여 메서드 호출과 같은 조인 포인트(Join Point)에 
+			어드바이스(Advice)라는 공통 모듈을 적용 -->
+		<!-- 주로 어노테이션을 활용하여 관점 지향적인 기능을 구현 -->
+		<!-- @Aspect 어노테이션을 사용하여 어드바이스를 정의하고, @Pointcut 어노테이션으로 조인 포인트를 정의 -->
+		<!-- @Before, @After, @Around 등의 어노테이션으로 어드바이스를 조인 포인트에 적용 -->
+
+
+
+		<!-- AspectJ -->
+		<!-- AspectJ : Java 언어의 확장으로서 AOP를 구현하는데 사용되는 강력한 도구 -->
+		<!-- AspectJ를 사용하여 AOP를 지원 -->
+		<!-- aspectjrt, aspectjweaver, aspectjtools 라이브러리 : AspectJ를 프로젝트에서 사용하기 
+			위해 추가 -->
+		<!-- @Aspect 어노테이션을 사용하여 어드바이스를 정의 → @Pointcut 어노테이션으로 조인 포인트를 정의 →어드바이스를 
+			조인 포인트에 적용하기 위해 @Before, @After, @Around 등의 어노테이션을 사용 -->
+		<!-- Spring AOP는 프록시 기반의 AOP를 제공하며, 반면 AspectJ는 바이트 코드 조작을 통해 AOP를 구현 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+		<!-- aspectjrt : AspectJ 런타임 라이브러리 -->
+		<!-- AspectJ 어드바이스가 실행될 때 필요한 라이브러리, 스프링 프레임워크가 AspectJ를 사용하기 위해 이 라이브러리를 
+			사용 -->
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+		<!-- aspectjweaver : AspectJ 위버(Weaver) 라이브러리 -->
+		<!-- aspect 코드를 바이트 코드로 변환하는 데 사용, AspectJ의 바이트 코드 조작 능력을 제공 -->
+
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjtools</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+		<!-- aspectjtools : AspectJ 컴파일러와 관련된 도구를 포함하는 라이브러리 -->
+		<!-- AspectJ 코드를 컴파일하고 유효성을 검사하는데 사용 -->
+
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+					</additionalBuildcommands>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>org.test.int1.Main</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

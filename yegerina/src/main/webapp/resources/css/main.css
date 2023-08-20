@@ -1,0 +1,1614 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+header,
+section,
+main{
+    width: 1260px;
+    margin: 0 auto;
+}
+
+header{
+ 	position:relative;
+    height: 305px;
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+}
+header h1{
+    position: absolute;
+    left: -20000px;
+}
+
+
+.container{
+    width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.295) ;
+    position:fixed;
+    top:0;
+    left:0;
+    background:rgba(250, 250, 250, 0.438);
+    z-index: 5;
+}
+
+header nav,
+header nav div,
+section nav{
+    display: flex; 
+    justify-content: space-between;
+    text-align: center;
+}
+
+header nav div ul,
+section nav ul{
+    display: flex;
+    justify-content: center;
+}
+
+header nav ul li,
+section nav ul li{
+    padding: 5px ;
+    width: 80px;
+}
+
+header nav div ul li a,
+section nav ul li a{
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 40px;
+}
+
+header nav ul li:hover a {
+    color: rgb(119, 117, 117);
+}
+
+header h2{
+	margin: 0 auto;
+    display: inline-block;
+    align-items:baseline;
+    text-indent: -9999em;
+    width: 300px;
+    height: 160px;
+/*     background: url(/yegerina2/resources/image/yegerina.jpg) no-repeat 0/300px;
+ */}
+
+/* 장바구니갯수아이콘 */
+.cartCountimage{
+	display: inline-block;
+    background-color: #767676;
+    color: white;
+    width: 20px;
+    border-radius: 100%;
+    line-height: 21px;
+    position: absolute;
+    right: 24px;	
+}
+
+
+#search{
+ 	position: relative;
+	left: -100px;
+	top: 10px
+}
+#search .searchWord{
+    width: 165px;
+	height: 22px;
+}
+
+/* 스타일을 적용할 컨테이너 요소 */
+#search .search_input_container {
+  position: relative;
+  display: inline-block;
+}
+
+/* 검색 버튼 스타일 설정 */
+#search .btn_search {
+  position: absolute;
+  right: 0;
+  top: 0.5px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none; /* 영역 선택 표시 해제 */
+}
+
+/* 검색 아이콘 이미지와 버튼 크기 설정 */
+#search .btn_search img {
+  width: 20px;
+  height: 20px;
+}
+
+#suggest{
+	position: absolute;
+    top: 22px;
+    width: 165px;	
+} 
+
+
+#suggestList{
+	display:block;
+    background-color: #ffeded;
+    border-bottom: 1px solid #fffffd;
+    border-left: 1px solid #fffffd;
+    border-right: 1px solid #fffffd;
+	border-radius: 5px;
+	padding-left: 10px;
+}
+
+#suggestList a{
+	color: #00000099;
+}
+#suggestList a:hover{
+	color: black;
+}
+
+
+.admin:hover .adminList{
+	display: block;
+}
+
+.adminList{
+	display: none;
+	position: absolute;
+}
+
+.adminList a:hover{
+	color: black;
+}
+
+
+
+/* ------------------------------------------------------------------------------------ */
+
+
+section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+/*     top: -50px; */
+    border-top: solid 1px rgba(0, 0, 0, 0.295) ;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.295);
+    white-space: nowrap;
+}
+
+section label{
+    width: 60px;
+    line-height: 50px;
+}
+
+.kind_container{
+    display: inline-block;
+    position: relative;
+    width: 30px;
+    height: 50px;
+}
+
+.shop_kindList_button,
+.shop_kindList_button::before,
+.shop_kindList_button::after{
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    transition: 0.5s;
+    background: rgba(0, 0, 0, 0.548);
+}
+
+.shop_kindList_button::before,
+.shop_kindList_button::after{
+    content: "";
+}
+
+.shop_kindList_button{
+    top: 50%;
+    /* left: 10px; */
+}
+.shop_kindList_button::before{
+    top: -10px;
+    left: 0px;
+}
+.shop_kindList_button::after{
+    left: 0px;
+    top: 10px;
+}
+
+.toggle:checked ~ .shop_kindList_button::after{
+    top: 0;
+    transform: rotate(225deg);
+}
+.toggle:checked ~ .shop_kindList_button::before{
+    top: 0;
+    transform: rotate(135deg);
+}
+.toggle:checked ~ .shop_kindList_button{
+    background: rgba(255, 255, 255, 0);
+}
+
+.toggle{
+    opacity: 0;
+}
+
+
+section nav{
+    display: flex; 
+    justify-content: space-evenly;
+    text-align: center;
+    width: 1260px;
+    background:rgba(250, 250, 250, 0.438);
+}
+
+ .fixed{
+    top: 50px;
+    position: fixed;
+    z-index: 4;
+}
+
+
+section nav ul{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin: 0 40px;
+    width: 100%;
+}
+
+
+section nav ul li a{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 30px;
+}
+
+
+section nav ul li{
+    margin: 0 30px 0 -10px;
+    width: 100px;
+    padding: 10px 20px 0px ;
+}
+
+
+section nav ul li:hover a {
+    color: rgb(97, 91, 91);
+}
+
+section nav ul li:hover ul a{
+    color: black;
+}
+
+
+
+section nav ul li ul{
+    display: block;
+    position: relative;
+    top: -10px;
+    z-index: 1;
+}
+
+section nav ul li ul li{
+    position: absolute;
+    background-color: white;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.295);
+    border-left: solid 1px rgba(0, 0, 0, 0.295);
+    border-right: solid 1px rgba(0, 0, 0, 0.295);
+    padding: 0 0 0 10px;
+    width: 100px;
+    left: -25px;
+    top: 20px;
+    text-align: left;
+}
+
+section nav ul li ul li:nth-child(2){
+    top: 20px;
+}
+
+section nav ul li ul li:nth-child(3){
+    top: 50px;
+}
+
+section nav ul li ul li:nth-child(4){
+    top: 80px;
+}
+section nav ul li ul li:nth-child(5){
+    top: 110px;
+}
+
+section nav ul li ul li:nth-child(6){
+    top: 140px;
+}
+
+section nav ul li ul li:nth-child(7){
+    top: 170px;
+}
+
+section nav ul li ul li:nth-child(8){
+    top: 200px;
+}
+
+.dpNone{
+    display: none;
+}
+
+section nav ul .Top:hover .top_list,
+section nav ul .Bottom:hover .bottom_list,
+section nav ul .Outer:hover .outer_list,
+section nav ul .Skirt:hover .skirt_list{
+    display: block;
+}
+
+section nav ul .Top:hover .top_list li:hover,
+section nav ul .Bottom:hover .bottom_list li:hover,
+section nav ul .Outer:hover .outer_list li:hover,
+section nav ul .Skirt:hover .skirt_list li:hover{
+    display: block;
+    background-color: rgba(211, 211, 211, 0.959);
+}
+
+
+section .all_list_container{
+    top: 100px;
+    border: solid 1px rgb(0, 0, 0);
+    width: 1260px;
+    height: 400px;
+    background-color: rgb(255, 255, 255);
+    z-index: 3;
+}
+
+section .all_list_container .all_list{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+section .all_list_container .all_list li{
+    background-color: rgba(240, 240, 240, 0.725);
+    width: 80px;
+    margin-top: 5px;
+    padding: 5px 15px;
+    height: 23px;
+    font-size: small;
+    font-weight: 560;
+    border-radius: 10%;
+    
+}
+
+
+section .all_list_container .all_list ul li{
+    position: relative;
+    top: 20px;
+    left: -10px;
+    padding: 0px;
+    margin-top: 6px;
+    font-weight: 500;
+    background-color: rgb(254, 254, 254);
+}
+
+section .all_list_container .all_list ul li:hover{
+    border-radius: 0%;
+    width: 100px;
+    background-color: rgba(211, 211, 211, 0.959);
+}
+
+
+
+/* ---------------------------------------------------------------------- */
+
+
+main{
+    position: static;
+    text-align: center;
+	height: 4500px;
+}
+
+ .mySlides img{
+    width: 1260px;
+    height: 550px;
+    vertical-align: middle;
+}
+
+.slideshow-container{
+    max-width: 2000px;
+    position: absolute;
+    margin: auto;
+    box-sizing: border-box;
+    z-index: 0;
+}
+
+.slideshow-container div:last-child{
+    text-align: center;
+}
+
+.text{
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+.numbertext{
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+.dot{
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active{
+    background-color: #ffffff;
+}
+
+.fade{
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.0s;
+    animation-name: fade;
+    animation-duration: 1.0s;
+}
+
+@-webkit-keyframes fade{
+    from{
+        opacity: .8;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+@keyframes fade{
+    from{
+        opacity: .8;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+/* -------------------------------------------------------- */
+
+
+
+
+
+
+main h2{
+    font-size: 40px;
+}
+main .main_text{
+    font-size: 18px;
+}
+
+
+main img {
+    width: 300px;
+    height: 400px;
+}
+
+
+.container_main{
+    width: 1260px;
+    display: flex; 
+    justify-content: space-around;
+    position: relative;
+	top: 30px;
+	box-sizing: border-box;
+}
+
+/* .container_main2{
+    width: 1260px;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    top: 100px;
+
+} */
+
+main article:nth-of-type(1){
+    position: relative;
+    top: 600px;
+}
+
+main article:nth-of-type(2){
+    position: relative;
+    top: 700px;
+}
+
+main article:nth-of-type(3){
+    position: relative;
+    top: 800px;
+}
+
+.new_container_main,
+.new_container_main2{
+    position: relative;
+    top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.new_main_textbox{
+    position: relative;
+    top: 10px;
+    line-height: 30px;
+    text-align: left;
+}
+
+.new_container_main2{
+    top: 100px;
+}
+
+.new_container_main img,
+.new_container_main2 img{
+    width: 400px;
+    height: 500px;
+}
+
+
+article .main_goods {
+	width: 1260px;
+    padding-top: 7px;
+    font-size: 0.75em;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+	
+	
+}
+
+article .main_goods .goods{
+	margin: 7px
+}
+
+#searchgoods #carousel_inner{
+	width: 1260px
+
+}
+
+.searchResult{
+	line-height: 200px;
+}
+
+#searchgoods #carousel_inner ul{
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+
+
+
+
+
+/* --------------카테고리 상품 페이지--------------------- */
+
+
+
+.categori_container{
+	width: 1260px;
+}
+
+
+.categori_container .categori_goods{
+	display: flex;
+	flex-wrap:wrap;
+}
+
+.categori_goods_item{
+	margin-top:20px;
+	margin-right:15px;
+	width: 300px;
+	
+}
+
+
+.categori_Title{
+	width: 1260px;
+    text-align: left;
+}
+
+.categori_Title a{
+	display:inline-block;
+	width: 190px;
+	height: 50px;
+	margin-bottom: 10px;
+	line-height: 50px;
+	padding-left: 10px	
+}
+
+/* --------------카테고리 상품 페이지--------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --------------상품 상세페이지--------------------- */
+.goodsDetail_container {
+    display: flex;
+    position: relative;
+    top: 50px;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 650px;
+}
+
+.goodsDetail_container #goods_image img{
+	width: 400px;
+	height: 500px;
+}
+
+#goods_detail_table table{
+	border-collapse: collapse;
+	line-height: 3;
+}
+#goods_detail_table table .explain{
+	border-bottom: 1px solid black;
+}
+
+#goods_detail_table ul{
+	display: flex;
+    justify-content: space-around;
+}
+
+#goods_detail_table li{
+    border: 1px solid #e1d8bf;
+    background-color: #e1d8bf;
+    margin-top: 20px;
+}
+
+#detailInfolist_container{
+    margin: 50px;
+}
+
+.detailinfolist_nav{
+	display: flex;
+    justify-content: space-around;
+}
+
+.detailinfolist_nav li{
+	width: 600px;
+}
+
+.detailinfolist_nav li:first-child{
+	border-top: 1px solid;
+	border-right: 1px solid;
+	border-left: 1px solid;
+}
+.detailinfolist_nav li:last-child{
+	border-top: 1px solid;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+}
+
+#nav-tabContent{
+	margin-top: 30px
+}
+#nav-tabContent .detailInfo_img{
+	width: 900px;
+    margin-bottom: 20px;
+}
+/* --------------상품 상세페이지--------------------- */
+
+
+
+
+/* --------------장바구니--------------------- */
+
+main .list_view{
+	width: 1100px;
+	margin: 50px auto;
+	border-collapse: collapse;
+}
+
+main .list_view tr td{
+	height: 150px;
+	padding: 10px 0px 10px 5px;
+}
+
+main .list_view tr:first-child td{
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	height: 50px;
+}
+
+main .total_info{
+	margin: 0 auto;
+	width: 1100px;
+	border: 1px solid black;
+}
+
+main .total_info .total_info_container .menuexplain td{
+    width: 200px;
+}
+
+main .total_info .total_info_container p{
+	height:100px;
+	margin:0 auto;
+	line-height: 100px;
+	width: 150px;
+	text-align: center;	
+}
+
+
+main .cartListContainer p{
+	text-align: center;
+	width: 100px;
+	line-height: 100px;
+}
+
+
+main .cartListContainer img{
+	width: 100px;
+	height: 100px;
+} 
+
+
+.orderbtn,
+.btn_home{
+	border-radius: 5px;
+    background-color: beige;
+    margin: 20px;
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* --------------장바구니--------------------- */
+
+
+
+
+
+/* ----------------상품 구매 창----------------------- */
+
+
+#form_order{
+	width: 1260px;
+    margin: 50px auto;
+    border: 1px solid;
+}
+
+.order_container{
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.order_form{
+	width: 1200px;
+    border-collapse: collapse; /* 테이블과 셀의 경계를 합침 */
+  	border-spacing: 0; /* 테이블과 셀 사이의 간격을 없앰 */
+	border-left: 1px solid;
+    border-right: 1px solid;	
+}
+
+.order_form_dot_line td{
+	border-bottom: 1px solid;
+	padding: 10px 0 10px 10px;
+}
+
+.order_form_dot_line td input{
+	height: 25px;
+    padding-left: 5px;
+    border: none;
+}
+
+
+.orderInfo{
+	width: 1200px;
+	border: 1px solid;
+}
+
+.orderInfo .orderInfoHead{
+	height: 50px;
+    display: flex;
+    line-height: 50px;
+}
+
+.orderInfo .orderInfoHead td{
+	border-bottom: 1px solid;
+    text-align: center;
+}
+
+.orderInfo td {
+	width: 200px;
+	border-right:1px solid; 
+}
+
+.orderInfo td img{
+    width: 50px;
+    height: 50px;
+}
+.orderInfo .orderInfoList {
+    display: flex;
+    flex-wrap: wrap;
+}
+.orderInfo .orderInfoList td{
+	height: 80px;
+    text-align: center;	
+}
+.orderInfo .orderInfoList td p{
+	width:180px;
+	height: 100px;
+	margin: 0 auto;
+}
+
+.orderInfo .orderInfoList td:nth-child(2){
+	line-height: 35px;
+}
+
+.orderInfo .orderInfoList td{
+	line-height: 80px;
+}
+
+.pay_detail_table_container input[type=button]{
+    background-color: white;
+    border: 1px solid #939a9f;
+    width: 130px;
+    height: 40px;
+    border-radius: 6px;	
+}
+
+.pay_detail_table_container input[type=radio]:checked{
+	color: blue;
+}
+
+
+.pay_detail_table_container .pay_method.active{
+	border-color: blue;
+	color: blue; 
+}
+
+.pay_detail_table{
+	border: 1px solid;
+	width: 1200px;
+	border-collapse: collapse;
+}
+
+
+.pay_detail_table td:first-child{
+	width: 180px;
+	padding-left: 10px
+}
+
+.pay_detail_table tr:first-child td{
+	border-bottom: 1px solid;
+	height: 100px;
+}
+
+.pay_detail_table tr:nth-child(2) td{
+	height: 80px;
+}
+.pay_detail_table tr:last-child td{
+	border-top: 1px solid;
+	height: 150px;
+}
+
+#tr_pay_card select{
+	width: 130px;
+    height: 40px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+#order_goods_btn{
+	font-size: 20px;
+    font-weight: 600;
+    width: 300px;
+    line-height: 80px;
+    margin: 0 auto;
+    /* color: white; */
+    background-color: darkslategray;
+}
+
+#order_goods_btn a{
+	color: white;
+}
+
+
+/* ----------------상품 구매 창----------------------- */
+
+
+
+
+
+
+
+
+
+
+/* ------------------------결제하기---------------  */
+
+#layer {
+	z-index: 2;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	 background-color:rgba(0,0,0,0.8); 
+}
+
+#popup_order_detail {
+	z-index: 3;
+    position: fixed;
+    text-align: center;
+    left: 29%;
+    top: 18%;
+    width: 40%;
+    height: 60%;
+    background-color: #ffffff;
+    border: 2px solid #0000ff;
+}
+
+#close {
+	z-index: 4;
+	float: right;
+}
+
+
+
+.detail_table{
+	width: 100%;
+	
+}
+
+.detail_table tr td{
+	height: 45px;
+}
+
+.detail_table tr td p{
+	width: 500;
+    height: 20px;
+    border: none;
+    border-bottom: 1px solid;
+    overflow: auto;
+}
+
+/* ---------------결제하기------------------------ */
+
+
+
+/* ----------------상품 구매 결과 창----------------------- */
+
+.orderResultInfo{
+	width: 1200px;
+	margin: 0 auto;
+	border: 1px solid;
+	border-collapse: collapse;
+}
+
+.orderResultInfo .orderResultHead td{
+	text-align: center;
+	border-bottom: 1px solid;
+}
+.orderResultInfo .orderResultlist td{
+	background: #e7e7e7;
+}
+
+.myOrderInfoTable,
+.payInfoTable{
+	width: 1200px;
+	margin: 0 auto;
+	border: 1px solid;
+	border-collapse: collapse;
+}
+.myOrderInfoTable td{
+	height: 50px;
+	border-bottom: 1px solid;
+	padding-left: 10px;
+	font-weight: 600;
+}
+.payInfoTable td{
+	padding-left: 10px;
+	border: 1px solid black;
+	font-weight: 600;
+}
+.payInfoTable td:first-child{
+	height: 50px;
+	width: 150px;
+}
+.payInfoTable td:last-child{
+	background: #e7e7e7;
+}
+.final_totalPrice{
+	color: #545cf2;
+}
+/* ----------------상품 구매 결과 창----------------------- */
+
+
+
+
+
+
+
+
+
+/* ---------------------주문내역조회------------------------ */
+
+
+#OrderHistory_container{
+	width: 1100px;
+	margin: 50px auto;
+}
+
+#orderListHistory_date{
+	width: 1100px;
+	display: flex;
+	margin: 0 auto;
+}
+#orderListHistory_date .order_date{
+	margin-right: 8px;
+	display: inline-block;
+	width: 60px;
+	line-height: 32px;
+	border-radius: 5px;
+	background-color: #e1e1e1;
+}
+#orderListHistory_date .d-none{
+	width: 300px;
+	display: flex;
+}
+#orderListHistory_date .d-none input{
+	border: none;
+	line-height: 32px;
+}
+#orderListHistory{
+	border-collapse: collapse;
+}
+
+#orderListHistory td{
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	width: 150px;
+}
+
+/* ---------------------주문내역조회------------------------ */
+
+
+
+
+
+
+
+
+
+/* ---------------------마이페이지-------------------------- */
+
+div{
+  box-sizing: border-box;
+}
+
+.green{
+	color: green;
+}
+
+.wrap{
+  background-color: #F8F8F8;  
+
+  margin: 30px auto;
+  height: 600px;
+}
+/* 녹색배경 */
+.greenContainer{  
+  height: 132px;
+  background-color: #ffffff;    
+  display: flex;
+  line-height: 100px;
+  padding: 16px;
+}
+
+.greenContainer .name{
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+} 
+
+/* ================== 주문/배송조회 박스 시작 ==================== */
+.shippingStatusContainer{
+  padding: 21px 16px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+/* 주문/배송조회 타이틀 */
+.shippingStatusContainer .title{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* 장바구니 결제완료 배송중 구매확정 [로우] */
+.shippingStatusContainer .status{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 21px;
+}
+/* 장바구니 결제완료 배송중 구매확정 [아이템]  */
+.shippingStatusContainer .item{
+  display: flex;
+}
+
+.shippingStatusContainer .number{
+  font-size: 31px;
+  font-weight: 500;
+  text-align: center;
+}
+.shippingStatusContainer .mypageText{
+  font-size: 12px;
+  font-weight: normal;
+  color: #c2c2c2;
+  text-align: center;
+}
+.shippingStatusContainer .icon{
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  width: 16px;
+  height: 16px;
+}
+
+
+/*=================== 주문목록 ~ 찜한상품 리스트 ==================*/
+.listContainer{  
+  padding: 0;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+.listContainer .item{  
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  color: black;
+  text-decoration: none;  
+  height: 56px;
+  box-sizing: border-box;
+}
+.listContainer .icon{  
+  margin-right: 14px;
+}
+.listContainer .mypageText{
+  font-size: 16px;
+  position: relative;
+}
+.listContainer .right{
+  margin-left: auto;
+}
+
+
+
+
+
+
+
+/* ---------------------마이 상세페이지 --------------------------------------*/
+
+
+.mydetailinfo_table {
+	width: 1200px;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+
+.mydetailinfo_table td:first-child,
+.mydetailinfo_table td:nth-child(2){
+	border-top: 1px solid #c8c3c3;
+}
+
+.mydetailinfo_table td:last-child{
+	height: 80px;
+}
+
+.mydetailinfo_table td{
+	border-bottom: 1px solid #c8c3c3;
+	padding-left: 10px;
+	height: 60px;
+}
+
+.mydetailinfo_table input[type=text],
+.mydetailinfo_table input[type=password]{
+	height:40px;
+	padding:0 10px
+}
+
+.mydetailinfo_table_btn{
+	display: inline-block; 
+	color:white;
+	width: 150px; 
+	line-height: 80px; 
+	background-color: #494953;
+	margin-top: 20px;
+	margin-left:-400px;
+	border-radius: 5px;
+	font-weight: 600;
+}
+
+ .cancelbtn,
+ .outmemberbtn{
+	width: 150px; 
+	line-height: 80px;
+	margin: 20px;
+	border-radius: 5px;
+	font-weight: 600; 	
+}
+
+.btn_container{
+	margin-left: 650px;
+	display: inline-block;
+}
+
+
+
+/* ---------------------마이 상세페이지 --------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+/* ---------------------마이페이지-------------------------- */
+
+/* -------------------------관리자-------------- */
+
+/* 관리자 상품관리 */
+#admin_goods>div:first-of-type{
+	text-align: left;
+	margin:20px 0 20px;
+}
+
+#admin_goods>div:first-of-type a{
+	border: 1px solid;
+	text-align:center;
+	display: inline-block;
+	width: 100px;
+	line-height: 30px;
+	margin-right: 10px;
+}
+#admin_goods>div:first-of-type button{
+	width: 200px;
+	height: 50px;
+	float: right;
+	background-color: #808000;
+	color: #fff;
+}
+#admin_goods table{
+	width: 1260px;
+	margin:0 auto;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 14px;
+}
+#admin_goods table tr:first-of-type{
+	background-color: rgb(210,210,210);
+	font-weight: bold;
+	text-align: center;
+}
+#admin_goods table td{
+	border:1px solid rgb(227,227,227);
+	padding: 5px;
+}
+
+#admin_goods table td a{
+	color: #000;
+}
+#admin_goods table td:nth-of-type(odd){
+	text-align: center;
+}
+#admin_goods table button{
+	width: 70%;
+	height: 25px;
+}
+
+
+/* 관리자 제품 수정/추가  */
+.goods_form table{
+	width:1200px;
+	margin: 0 auto;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 14px;
+}
+
+.goods_form table td{
+	padding:10px;
+	border:1px solid rgb(227,227,227);
+}
+.goods_form table td:first-of-type{
+	background-color: rgb(210,210,210);
+	font-weight: bold;
+}
+.goods_form table tr:last-of-type td:first-of-type{
+	background: none;
+	font-weight: normal;
+}
+
+.goods_form table input,select{
+	padding: 5px;
+	width: 100%;
+}
+
+.goods_form button{
+	width:100%;
+	border:1px solid rgb(227,227,227);
+	padding:15px;
+	margin:20px 0;
+	background-color: #808040;
+	color: #fff;
+}
+
+
+
+
+
+
+
+
+/* 관리자 회원관리 */
+#admin_member {
+	width: 100%;
+}
+
+#admin_member>div:first-of-type {
+	margin-top: 20px;
+}
+
+.badge {
+	font-size: 13px;
+	padding: 5px 10px;
+	border: 1px solid rgb(227, 227, 227);
+	border-radius: 5px;
+	margin-left: 7px;
+	color: #111;
+}
+
+#admin_member .admin_member_table {
+	margin: 40px 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 14px;
+	width: 100%;
+}
+
+#admin_member .admin_member_table tr:first-of-type {
+	background-color: rgb(210, 210, 210);
+	font-weight: bold;
+	text-align: center;
+}
+
+#admin_member .admin_member_table td {
+	padding: 5px;
+	border: 1px solid rgb(227, 227, 227);
+}
+
+
+#admin_member .admin_member_table td:first-of-type {
+	text-align: center;
+}
+
+
+#admin_member .admin_member_table td:last-child{
+	text-align: center;
+}
+
+
+#admin_member .admin_member_table td div {
+	padding: 5px;
+}
+
+#admin_member .admin_member_table td span {
+	text-align: left;
+}
+
+#admin_member .admin_member_table input {
+	width: 60%;
+	float: right;
+}
+
+#admin_member button {
+	height: 25px;
+}
+
+
+#admin_member>div:first-of-type span,
+#admin_order>div:first-of-type span{
+    width: 150px;
+    line-height: 50px;
+	text-align : center;
+    float: right;
+    background-color: #cccca8;
+    color: #443838;
+	font-weight: 600;
+}
+
+
+
+
+
+
+/* 관리자 주문 관리 */
+
+select.prepared{
+	background-color: #c200ff4a;
+}
+
+select.success{
+	background-color: #0093ff57;
+}
+select.danger{
+	background-color: #edff0080;
+}
+
+#admin_order>div:first-of-type {
+	margin: 30px 0;
+}
+
+#admin_order table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 14px;
+	width: 100%;
+}
+.empty_order{
+	opacity: .5;
+}
+#admin_order table div {
+	margin: 10px 0;
+}
+
+#admin_order table input {
+	width: 60%;
+	float: right;
+}
+
+#admin_order table tr:first-of-type {
+	background-color: rgb(210, 210, 210);
+	text-align: center;
+	font-weight: bold;
+}
+
+#admin_order table td {
+	padding: 5px;
+	border: 1px solid rgb(227, 227, 227);
+}
+#admin_order table td:first-of-type{
+	text-align: center;
+}
+
+#admin_order table hr {
+	margin: 10px 0;
+}
+
+#admin_order table select {
+	width: 60%;
+	float: right;
+	border: none;
+}
+
+#admin_order table button {
+	height: 25px;
+}
+
+
+
+
+
+
+
+
+
+/* -------------------------관리자-------------- */
+
+
+/* ------------------------------------------- */
+
+footer section{
+    width: 100%;
+    height: 50px;
+    position: static;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.295);
+}
+
+footer section nav{
+    width: 1260px;
+    position: relative;
+    left: -330px;
+    width: 600px;
+}
+
+footer section nav ul{
+    display: flex;
+    justify-content: left;
+
+}
+
+footer section nav ul li{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    margin: 5px ;
+    border-right: solid 1px rgba(0, 0, 0, 0.295);
+}
+
+footer section nav ul li a{
+    font-size: 12px;
+    line-height: 12px;
+    text-align: center;
+
+}
+
+.info {
+    border: #ffffff;
+    width: 1260px;
+    height: 300px;
+  }
+
+.info ul{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    top: 40px;
+}
+
+.info ul li{
+    width: 200px;
+    margin: 30px;
+    padding: 0 40px 0 10px;
+    border-right: 1px solid;
+}
+
+.info ul li h6{
+    line-height: 50px;
+}
+
+.info ul li span,
+.info ul li span a{
+    font-size: 12px;
+    color: rgb(119, 117, 117)
+}
+
+.info ul li span a:hover{
+    color: black;
+}
+
+.info ul li div{
+    font-size: 25px;
+    font-weight: 600
+}
+
+.info ul li:last-child{
+    border-right: #ffffff;
+}

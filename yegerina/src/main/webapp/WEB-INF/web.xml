@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- 웹 어플리케이션에서 사용할 필터를 지정 -->
+    <filter>
+         <filter-name>encodingFilter</filter-name>
+        
+        <!-- 필터 로직을 구현한 자바 클래스를 지정 -->
+        <!-- 아래는 문자 인코딩을 다루기 위한 스프링 프레임워크에서 제공하는 필터 클래스 사용 -->
+         <filter-class>
+             org.springframework.web.filter.CharacterEncodingFilter
+    	 </filter-class>
+    	
+    	 <!-- 필터의 초기화 매개변수를 정의 -->
+		 <!-- init()메서드를 호출할 때(초기화 할 때) 전달할 파라미터를 설정. -->
+		 <!-- 필터를 사용하기전에 초기화 작업에 필요한 정보를 제공하기 위해 사용 -->
+    	 <init-param>
+    	 	
+    	 	 <!-- 매개 변수의 이름을 지정 -->
+	         <param-name>encoding</param-name>
+	         
+	         <!-- 매개변수의 값을 지정 -->
+	         <!-- 아래의 value는 필터를 통과하는 모든 요청은 UTF-8 문자 인코딩을 사용 -->
+	         <param-value>UTF-8</param-value>
+         </init-param>      
+    </filter>
+
+	<!-- url-pattern에 대해 사용할 필터 지정 -->
+	<filter-mapping>
+	
+			<!-- 앞에서 정의한 encodingFilter를 지정 -->
+	        <filter-name>encodingFilter</filter-name>
+	        
+	        <!-- 클라이언트가 요청한 특정 URI에 대해서 필터링할 때 사용 -->
+	        <!-- /*은 모든  URL에 대해 필터를 적용한다는 의미 -->
+	        <!-- <url-pattern> 태그를 사용하지 않고, <servlet-name> 태그를 사용하면 특정 서블릿에 대한 요청에 대해서 필터를 적용 -->
+	        <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- 모든 서블릿과 필터에서 공유하는 Spring 컨테이너의 루트 정의 -->
+	<!-- Spring 애플리케이션에서 사용되는 공통적인 설정과 빈들을 정의하고 공유하는데 사용 -->
+	<!-- 서블릿과 필터들 간에 공유되며, 애플리케이션 내의 여러 컴포넌트들이 공유하는 설정들과 빈들을 정의 -->
+	<!-- 컨텍스트 파라미터를 정의하는 요소 -->
+	<context-param>
+	
+		<!-- 파라미터의 이름을 지정 -->
+		<!-- Spring의 웹 애플리케이션 컨텍스트 초기화 과정에서 사용 -->
+		<param-name>contextConfigLocation</param-name>
+		
+		<!-- 애플리케이션에서 사용하는 빈들과 설정들을 정의 -->
+		<!-- 파라미터의 값으로 Spring설정 파일의 위치를 지정 -->
+		<!-- 파라미터값에 있는 XML파일은 Spring 컨테이너의 루트 컨텍스트 설정을 정의 -->
+		<param-value>/WEB-INF/spring/mybatis-context.xml</param-value>
+	</context-param>
+
+
+
+
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<!-- 모든 서블릿과 필터에서 공유하는 Spring 컨테이너를 생성 -->
+	<!-- Spring Framework에서 사용되는 웹 애플리케이션 컨텍스트를 생성하고 관리하는 리스너를 등록하는 부분 -->
+	<!-- 애플리케이션 리스너를 정의 -->
+	<!-- 리스너는 애플리케이션의 생명주기 이벤트를 감지하고 처리할 수 있는 컴포넌트
+			* 생명주기 이벤트(애플리케이션이 시작되고 종료되는 과정에서 발생하는 이벤트)
+			 . 초기화(애플리케이션의 시작시점에서 발생, 필요한 설정을 로드하고 초기화 작업을 수행)- 데이터베이스 연결, 서비스 초기화등의 작업
+			 . 실행(애플리케이션이 정상적으로 실행되는 상태) - 클라이언트 요청을 처리하고 비즈니스 로직을 실행
+			 . 종료(애플리케이션의 종료 시점에서 발생, 리소스를 정리하고 메모리를 해제하는 등의 종료작업 수행) - 데이터베이스 연결종료, 파일 핸들 해제 등. -->			 
+	<!-- 웹 애플리케이션의 시작 시점에서 Spring 컨테이너를 초기화하고 설정 파일을 기반으로 애플리케이션 컨텍스트를 생성하는 역할 -->
+	<listener>
+	
+		<!-- 웹 애플리케이션 컨텍스트를 생성하고 관리하는 리스너를 등록 -->
+		<!-- 아래의 클래스는 웹 애플리케이션이 시작될 때 Spring 컨테이너를 초기화 하고 설정 파일을 로드하여 컨텍스트를 구성 -->
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+
+
+	<!-- Processes application requests -->
+	<!-- 애플리케이션 요청을 처리하는 서블릿 설정 -->
+	<!-- DispatcherServlet을 사용하여 애플리케이션의 요청을 처리하는 서블릿을 정의하고 초기화 -->
+	<servlet>
+	
+		<!-- 서블릿의 이름을 지정 -->
+		<servlet-name>appServlet</servlet-name>
+		
+		<!-- 서블릿 클래스를 지정 -->
+		<!-- 아래의 클래스를 사용하여 Spring의 디스패처 서블릿을 등록 -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		
+		<!-- 서블릿의 초기화 파라미터 정의 -->
+		<init-param>
+		
+			<!-- 서블릿의 초기화 시 Spring 설정 파일의 위치를 지정하는 데 사용 -->
+			<!-- 초기화 파라미터의 이름을 지정 -->
+			<param-name>contextConfigLocation</param-name>
+			
+			<!-- 초기화 파라미터의 값으로 Spring 설정 파일의 위치를 지정 -->
+			<!-- value위치에 있는 XML 파일은 Spring MVC의 서블릿 컨텍스트 설정을 정의 -->
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		
+		<!-- 서블릿이 애플리케이션 시작 시점에 로드되도록 지정 -->
+		<!-- 값이 작은 숫자일수록 우선순위가 높아짐 -->
+		<!-- 이 설정을 통해 서블릿이 초기화 단계에서 자동으로 로드되어 애플리케이션의 시작과 함께 필요한 설정과 초기화 작업을 수행 -->
+		<!-- 서블릿과 관련된 작업들이 애플리케이션 시작과 함께 미리 준비되어 요청을 빠르게 처리할수 있게 됨 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+
+		
+	<servlet-mapping>
+	<!-- servlet-mapping 요소는 web.xml 파일에서 서블릿을 URL 패턴에 매핑하는 데 사용 -->
+	<!-- servlet-name이 "appServlet"으로 설정되어 있고, url-pattern이 "/"로 설정되어 있으므로, 모든 요청은 "appServlet" 서블릿으로 매핑 -->
+		<servlet-name>appServlet</servlet-name>
+		<!-- servlet-context.xml 파일을 로드하여 Spring MVC 구성을 설정 -->
+		
+		<url-pattern>/</url-pattern>
+	<!-- url-pattern이 "/"로 설정되면, 해당 서블릿은 모든 URL 요청을 처리 -->	
+	<!-- Spring MVC의 DispatcherServlet은 모든 요청을 받아들이고, 해당 요청을 처리하는 컨트롤러에게 전달 -->
+	<!-- 컨트롤러는 @RequestMapping을 사용하여 각 URL 패턴에 따라 요청을 처리 -->
+	</servlet-mapping>
+   
+
+
+</web-app>

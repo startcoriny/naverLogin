@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- MyBatis 구성 파일의 루트 요소 -->
+<configuration>
+
+
+	<settings> 
+	    <setting name="cacheEnabled" value="false" />
+	    <setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	
+	<!-- MyBatis 타입 별칭 설정 -->
+	<!-- type : 클래스의 전체 경로, alias : 클래스에 부여할 별칭을 설정 -->
+	<!-- MyBatis 매퍼 XML 파일에서 해당 별칭을 사용하여 클래스를 참조 -->
+	<!-- 매퍼 XML 파일에서 SQL 문장을 작성할 때 객체 타입을 지정할 때 유용하게 사용 -->
+  	<typeAliases>
+         
+        <!-- com.jimini.yegerina.goods.vo.GoodsVO 클래스에 대한 별칭을 'goodsVO'로 설정 -->
+	    <typeAlias type="com.jimini.yegerina.goods.vo.GoodsVO" alias="goodsVO" />
+		
+		<!-- com.jimini.yegerina.goods.vo.ImageFileVO 클래스에 대한 별칭을 'imageFileVO'로 설정 -->
+		<typeAlias type="com.jimini.yegerina.goods.vo.ImageFileVO" alias="imageFileVO" />
+		
+		<!-- com.jimini.yegerina.member.vo.MemberVO 클래스에 대한 별칭을 'memberVO'로 설정 -->
+		<typeAlias type="com.jimini.yegerina.member.vo.MemberVO" alias="memberVO" />
+	    
+	    <!-- com.jimini.yegerina.cart.vo.CartVO 클래스에 대한 별칭을 'cartVO'로 설정 -->
+	    <typeAlias type="com.jimini.yegerina.cart.vo.CartVO" alias="cartVO" />
+		
+		<!-- com.jimini.yegerina.order.vo.OrderVO 클래스에 대한 별칭을 'orderVO'로 설정 -->
+		<typeAlias type="com.jimini.yegerina.order.vo.OrderVO" alias="orderVO" />
+	    
+	    <!-- com.jimini.yegerina.mypage.vo.MyPageVO 클래스에 대한 별칭을 'mypageVO'로 설정 -->
+	    <typeAlias type="com.jimini.yegerina.mypage.vo.MyPageVO" alias="mypageVO" />  
+    
+  	</typeAliases>
+</configuration>
+
+
+

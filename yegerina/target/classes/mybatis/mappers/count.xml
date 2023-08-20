@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.counts">
+	<!-- 장바구니 갯수 카운트 -->
+	<select id="cartLen" parameterType="String" resultType="int">
+        <![CDATA[
+        select count(*) from T_SHOPPING_CART where member_id=#{memberId}
+	    ]]>
+	</select>
+
+	<!-- 결제완료 카운트 -->
+	<select id="paycompletelen" parameterType="String" resultType="int">
+        <![CDATA[
+		SELECT COUNT(*) FROM T_SHOPPING_ORDER WHERE member_id = #{memberId} and DELIVERY_STATE IS NOT NULL
+	    ]]>
+	</select>
+	
+	<!-- 배송중 갯수 카운트 -->
+	<select id="deliveringLen" parameterType="String" resultType="int">
+        <![CDATA[
+        select count(*) from T_SHOPPING_ORDER
+			  where member_id = #{memberId} and delivery_state='delivering'
+	    ]]>
+	</select>
+
+
+	<!-- 구매확정 카운트 -->
+	<select id="Purchase_completed" parameterType="String" resultType="int">
+        <![CDATA[
+		SELECT COUNT(*) FROM T_SHOPPING_ORDER WHERE member_id = #{memberId} and delivery_state='finished_delivering'
+	    ]]>
+	</select>
+	
+	<!-- 싱픔 갯수 카운트 -->
+	<select id="goodsLen" resultType="int">
+        <![CDATA[
+         select count(*) from T_SHOPPING_GOODS
+	    ]]>
+	</select>
+	
+	
+	
+	<!-- 회원 수 카운트 -->
+	<select id="membersLen" resultType="int">
+        <![CDATA[
+         select count(*) from T_SHOPPING_MEMBER
+	    ]]>
+	</select>
+	
+	
+	<!-- 주문 건수 카운트 -->
+	<select id="ordersLen" resultType="int">
+        <![CDATA[
+         select count(*) from T_SHOPPING_ORDER where delivery_state <>'cancel_order'
+	    ]]>
+	</select>
+	
+	<!-- 총매출 카운트 -->
+	 <select id="totalSales" resultType="java.lang.Long">
+        <![CDATA[
+        select sum(GOODS_SALES_PRICE*ORDER_GOODS_QTY) 
+        as total_price 
+        from T_SHOPPING_ORDER where delivery_state <>'cancel_order'
+	    ]]>
+	</select>
+	
+</mapper>
