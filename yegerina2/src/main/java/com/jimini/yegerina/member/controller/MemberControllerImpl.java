@@ -2,14 +2,11 @@ package com.jimini.yegerina.member.controller;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,8 +18,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.jimini.yegerina.common.base.BaseController;
 import com.jimini.yegerina.member.naverApi.NaverLoginBO;
@@ -71,9 +70,8 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	}
 	
 	
-	
 	@RequestMapping(value="/userNaverLoginPro.do",  method = {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView userNaverLoginPro(Model model,@RequestParam Map<String,Object> paramMap, @RequestParam String code, @RequestParam String state,HttpSession session) throws SQLException, Exception {
+	public String userNaverLoginPro(Model model,@RequestParam Map<String,Object> paramMap, @RequestParam String code, @RequestParam String state,HttpSession session) throws SQLException, Exception {
 		System.out.println("paramMap:" + paramMap);
 		Map <String, Object> resultMap = new HashMap<String, Object>();
 
@@ -88,54 +86,72 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		MemberVO naverConnectionCheck = memberService.naverConnectionCheck(apiJson);
 		
 		System.out.println("체크해온 네이버 커넥션 체크@@@@@@@@" + naverConnectionCheck);
-		ModelAndView mav = new ModelAndView();
+	
 		
-		if(naverConnectionCheck == null) { //일치하는 아이디 없으면 가입
-			
+		
+		if(naverConnectionCheck == null) { //일치하는 아이디 없으면 가입		
+			System.out.println("네이버커넥션 null값일때 진입");
 			model.addAttribute("email",apiJson.get("email"));
-			mav.setViewName("/member/setdataForm");
-			return mav;
-			
-			
+			return "/member/setdataForm";
 		}else if(naverConnectionCheck.getNaverLogin() == null &&naverConnectionCheck.getEmail() != null) { //아이디 가입 되어있고 네이버 연동 안되어 있을시
 			System.out.println("이메일은 있지만 네이버로그인이 안되어있을시 진입");
 			memberService.setNaverConnection(apiJson);
-			MemberVO loginCheck = memberService.userNaverLoginPro(apiJson);
-			session.setAttribute("userInfo", loginCheck);
-			mav.setViewName("redirect:/main/main.do");
-			return mav;
+			MemberVO memberInfo = memberService.userNaverLoginPro(apiJson);
+			session.setAttribute("memberInfo", memberInfo);
 		}else { //모두 연동 되어있을시
-			MemberVO loginCheck =  memberService.userNaverLoginPro(apiJson);
-			session.setAttribute("userInfo", loginCheck);
+			System.out.println("이메일, 네이버로그인이 다 되어있을시 진입");
+			MemberVO memberInfo =  memberService.userNaverLoginPro(apiJson);
+			session.setAttribute("memberInfo", memberInfo);
 		}
-		mav.setViewName("redirect:/main/main.do");
-		return mav;
-		// 이미 인터셉터를 거쳐서 컨트롤러를 들어왔기 때문에 .do를 잘라낸 viewName 직접 반환.
+		
+		return  "redirect:/main/main.do";
 
 	}
 	
 	
 	@RequestMapping(value="/userNaverRegisterPro.do", method=RequestMethod.POST)
-	public Map<String, Object> userNaverRegisterPro(@RequestParam Map<String,Object> paramMap,HttpSession session) throws SQLException, Exception {
+	@ResponseBody
+	public Map<String, Object> userNaverRegisterPro(@RequestParam Map paramMap,HttpSession session) throws SQLException, Exception {
 		System.out.println("paramMap:" + paramMap);
-		Map <String, Object> resultMap = new HashMap<String, Object>();
+		Map resultMap = new HashMap();
 		Integer registerCheck = memberService.userNaverRegisterPro(paramMap);
-		System.out.println(registerCheck);
+		System.out.println("@@@@@로그인 성공여부 1이면 성공@@@@@ :" +registerCheck);
 		
 		if(registerCheck != null && registerCheck > 0) {
-			Map<String, Object> loginCheck = (Map<String, Object>) memberService.userNaverLoginPro(paramMap);
-			session.setAttribute("userInfo", loginCheck);
+			System.out.println("성공했을시");
+			MemberVO loginCheck = memberService.userNaverLoginPro(paramMap);
+			System.out.println("유저 네이버 로그인 프로 컨트롤러에 무사도착");
+			session.setAttribute("loginCheck", loginCheck);
 			resultMap.put("JavaData", "YES");
+			resultMap.put("loginCheck", loginCheck);
 		}else {
+			System.out.println("실패했을시");
 			resultMap.put("JavaData", "NO");
 		}
+		
+		System.out.println("resultMap에 들어가 있는게 뭐야 : " + resultMap.get("JavaData"));
 		return resultMap;
 	}
 	
 	
 	
+	@RequestMapping(value="/naverlogin.do" ,method = RequestMethod.POST)
+	// 컨트롤러 클래스 또는 메서드에 웹 요청 경로를 매핑하는데 사용되는 어노테이션
+	// 특정 URL 경로에 해당하는 요청을 처리하는 메서드를 지정할 수 있음.
+	// value : 매핑할 URL 경로, method : 요청의 HTTP 메서드 타입 지정
 	
-	
+	public ModelAndView login(@RequestParam MemberVO memberId,@RequestParam MemberVO email,	
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		System.out.println("네이버로그인으로 들어온 아이디 : " + memberId);
+		System.out.println("네이버로그인으로 들어온 이메일 : " + email);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		
+		mav.setViewName("redirect:/main/main.do");
+		return mav;
+	}
 	
 	
 	
@@ -168,6 +184,7 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		System.out.println(loginMap + " : member컨트롤러에 들어온 ID,PW");
 		System.out.println(loginMap.toString() + " : toString으로 확인한 들어온 ID,PW");
 		System.out.println(loginMap.get("member_id") + " : 들어온 id확인");
+		System.out.println(loginMap.get("email") + " : 들어온 email확인");
 		ModelAndView mav = new ModelAndView();
 		// ModelAndView객체는 springMVC에서 사용되는 뷰와 데이터를 함게 처리하는 클래스
 		// 컨트롤러에서 데이터와 뷰 정보를 담아서 반환하여 클라이언트에게 전달

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <form class="join_us" name="userRegisterForm" method="post">
+    <form name="userRegisterForm" class="join_us" method="post">
         <h3 style="margin: 70px 0px 20px 0px;">신규 회원가입</h3>
 
 <%--         <table class="outLoginTable">
@@ -83,7 +83,7 @@
                     </tr>
                     <tr class="dot_line">
                         <td >&nbsp;&nbsp;이메일</td>
-                        <td> <input type="text" name="hp1" placeholder=" @ 포함해서 작성" required="required"></td>
+                        <td> <input type="text" name="email" placeholder=" @ 포함해서 작성" required="required"></td>
                     </tr>
 
                     <tr class="dot_line">
@@ -217,26 +217,54 @@
 		}).open();
 	}
 	
+
+	
+	function getFormData(form) {
+	    var formData = {};
+	    var inputs = form.querySelectorAll("input, select, textarea");
+
+	    for (var i = 0; i < inputs.length; i++) {
+	        var input = inputs[i];
+	        var name = input.name;
+	        var value = input.value;
+	        
+	        // 예외처리: 라디오 버튼과 체크박스 처리
+	        if (input.type === "radio" || input.type === "checkbox") {
+	            if (input.checked) {
+	                formData[name] = value;
+	            }
+	        } else {
+	            formData[name] = value;
+	        }
+	    }
+
+	    return formData;
+	}
+	
 	
 	
 	function register(){
-		var registerData =common.serializeObject($("form[name=userRegisterForm]"));
-		
+		var form = document.forms.userRegisterForm;
+	    var registerData = getFormData(form);
+	    console.log("memberId1 : "+memberId);
 		$.ajax({
 			type : 'POST',
-			url : '/user/userNaverRegisterPro.do',
+			url : '${contextPath}/member/userNaverRegisterPro.do',
 			data : registerData,
 			dataType : 'json',
 			success : function(data){
 				if(data.JavaData == "YES"){
 					alert("가입되었습니다.");
-					location.href = '/user/usermain.do'
-				}else{
-					alert("가입에 실패했습니다.");
-				}
+	                var memberId = data.loginCheck.memberId;
+	                var email = data.loginCheck.email;
+	                window.location.href = '${contextPath}/member/naverlogin.do?memberId=' + memberId + '&email=' + email;
+				
+	            } else {
+	                alert("가입에 실패했습니다.1");
+	            }
 			},
 			error: function(xhr, status, error){
-				alert("가입에 실패했습니다."+error);
+				alert("가입에 실패했습니다.2"+error);
 			}
 		});
 	}

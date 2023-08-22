@@ -32,7 +32,7 @@
 	    <![CDATA[
 			select * from t_shopping_member 
 			 where memberId=#{memberId}
-			 and memberPw=#{memberPw}				 
+			 and memberPw=#{memberPw} or memberId=#{memberId} and email=#{email}				 
 		]]>
 	</select>
 	
@@ -55,16 +55,16 @@
 		where memberId = #{memberId}
 	</select>
 	
-	<select id="naverConnectionCheck" parameterType="java.util.Map" resultType="memberVO">
+ 	<select id="naverConnectionCheck" parameterType="java.util.Map" resultType="memberVO">
 		<![CDATA[
-			SELECT EMAIL,NAVERLOGIN,MEMBERID FROM T_SHOPPING_MEMBER WHERE EMAIL = #{email}
+			SELECT * FROM T_SHOPPING_MEMBER WHERE EMAIL = #{email}
 		]]> 
 	</select>
 
 
 	<select id="userNaverLoginPro" parameterType="java.util.Map" resultType="memberVO">
 		<![CDATA[
-			SELECT MEMBERNAME FROM T_SHOPPING_MEMBER WHERE email = #{email} AND NAVERLOGIN = #{email}
+			SELECT * FROM T_SHOPPING_MEMBER WHERE email = #{email} AND NAVERLOGIN = #{email}
 		]]> 
 	</select>
 
@@ -79,8 +79,8 @@
 	<insert id="userNaverRegisterPro"  parameterType="java.util.Map">
 		<![CDATA[
 			insert into t_shopping_member(
-		   	memberId,memberName,memberPw,hp1,zipcode,address,subaddress,NAVERLOGIN) 
-		   	values(#{memberId}, #{memberName}, #{memberPw}, #{hp1}, #{zipcode}, #{address}, #{subaddress}, #{memberId})
+		   	memberId,memberName,memberPw,hp1,zipcode,address,subaddress,email,NAVERLOGIN) 
+		   	values(#{memberId}, #{memberName}, #{memberPw}, #{hp1}, #{zipcode}, #{address}, #{subaddress},#{email}, #{email})
 		]]>      
 	</insert>
 	

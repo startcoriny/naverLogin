@@ -63,21 +63,40 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	
 	
-	  // 네이버 로그인 아이디확인 
-	 public MemberVO naverConnectionCheck(Map<String, Object> apiJson) throws Exception{ 
-	 System.out.println(apiJson +" : memberDAO에 들어온 네이버 로그인 정보@@@@@@@@@@"); 
-	 MemberVO naverConnectionCheck = sqlSession.selectOne("mapper.member.naverConnectionCheck",apiJson); 
-	 System.out.println("DAO에서 쿼리문돌고 나온 네이버커넥션체크 : " + naverConnectionCheck.toString());
-	 
-	 return naverConnectionCheck;
-	 }
-	 
+	/*
+	 * // 네이버 로그인 아이디확인 public MemberVO naverConnectionCheck(Map<String, Object>
+	 * apiJson) throws Exception{ System.out.println(apiJson
+	 * +" : memberDAO에 들어온 네이버 로그인 정보@@@@@@@@@@"); MemberVO naverConnectionCheck =
+	 * sqlSession.selectOne("mapper.member.naverConnectionCheck",apiJson);
+	 * System.out.println("DAO에서 쿼리문돌고 나온 네이버커넥션체크 : " +
+	 * naverConnectionCheck.toString());
+	 * 
+	 * return naverConnectionCheck; }
+	 */
+	public MemberVO naverConnectionCheck(Map<String, Object> apiJson) throws Exception { 
+	    System.out.println(apiJson + " : memberDAO에 들어온 네이버 로그인 정보@@@@@@@@@@"); 
+	    MemberVO naverConnectionCheck = sqlSession.selectOne("mapper.member.naverConnectionCheck", apiJson); 
+	    System.out.println("DAO에서 쿼리문돌고 나온 네이버커넥션체크 : " + (naverConnectionCheck != null ? naverConnectionCheck.toString() : "null"));
+
+	    // 만약 naverConnectionCheck이 null 또는 빈 문자열인 경우에는 null로 설정
+	    if (naverConnectionCheck == null || naverConnectionCheck.getNaverLogin() == null || naverConnectionCheck.getNaverLogin().isEmpty()) {
+	        naverConnectionCheck = null;
+	    }
+
+	    return naverConnectionCheck;
+	} 
+	
+	
+	
+	
+	
 
 	
 	// 네이버로 가입된 계정 일시
 	public MemberVO userNaverLoginPro(Map<String, Object> apiJson) throws Exception{
 		System.out.println(apiJson + " : memberDAO에 들어온 네이버 로그인 정보@@@@@@@@@@");
 		MemberVO userNaverLoginPro = sqlSession.selectOne("mapper.member.userNaverLoginPro",apiJson);
+		System.out.println("userNaverLoginPro를 거쳐서 나온 정보 : " + userNaverLoginPro.getMemberId() + "," + userNaverLoginPro.getEmail());
 		return userNaverLoginPro;
 	}
 

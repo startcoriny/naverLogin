@@ -74,6 +74,7 @@ public class MemberServiceImpl implements MemberService {
 	// 네이버로 가입된 계정 일시
 	public MemberVO userNaverLoginPro(Map<String, Object> apiJson) throws Exception{
 		MemberVO userNaverLoginPro = memberDAO.userNaverLoginPro(apiJson);
+		System.out.println("@@@userNaverLoginProDAO를 거쳐서 나온 userNaverLoginPro서비스 : @@@" + userNaverLoginPro);
 		return userNaverLoginPro;
 	}
 	
