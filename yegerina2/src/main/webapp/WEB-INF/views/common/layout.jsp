@@ -21,6 +21,19 @@
 	<title><tiles:insertAttribute name="title" /></title>
 	
 </head>
+
+<script>
+    var naverLoginStatus = '<%= session.getAttribute("naverLoginStatus") %>';
+    if (naverLoginStatus === "loggedIn") {
+        alert("네이버로 로그인되었습니다.");
+        // 알림을 띄웠으면 다시 세션에서 해당 상태 정보 삭제
+        <%
+        session.removeAttribute("naverLoginStatus");
+    	%>
+    }
+</script>
+
+
 <body>
 	<div id="outer_wrap">
 		

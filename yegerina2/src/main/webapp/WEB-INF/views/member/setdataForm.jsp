@@ -16,29 +16,6 @@
     <form name="userRegisterForm" class="join_us" method="post">
         <h3 style="margin: 70px 0px 20px 0px;">신규 회원가입</h3>
 
-<%--         <table class="outLoginTable">
-            <tr>
-            	<td class="outLogin">
-            		sns계정으로 회원가입
-            	</td>
-            </tr>
-            <tr class="outLogin_container">
-            	<td class="outLogin_container">
-            		<div class="naver_join">
-            			<img alt="" src="${contextPath }/resources/image/naver_icon.png">
-	            		<a href="https://nid.naver.com/nidlogin.login?mode=form&url=https://www.naver.com/">
-	            			네이버로 로그인
-	            		</a> 
-            		</div>
-            		<div class="kakao_join">
-            			<img alt="" src="${contextPath }/resources/image/kakao_icon.png">
-	            		<a href="https://accounts.kakao.com/login/?continue=https%3A%2F%2Fcs.kakao.com%2Fhelps%3Fcategory%3D25">
-	            			카카오로 로그인
-	            		</a> 
-            		</div>
-            	</td>
-            </tr>            
-        </table> --%>
 		<br>
 		<br>
 
@@ -246,7 +223,6 @@
 	function register(){
 		var form = document.forms.userRegisterForm;
 	    var registerData = getFormData(form);
-	    console.log("memberId1 : "+memberId);
 		$.ajax({
 			type : 'POST',
 			url : '${contextPath}/member/userNaverRegisterPro.do',
@@ -257,7 +233,24 @@
 					alert("가입되었습니다.");
 	                var memberId = data.loginCheck.memberId;
 	                var email = data.loginCheck.email;
-	                window.location.href = '${contextPath}/member/naverlogin.do?memberId=' + memberId + '&email=' + email;
+	                
+	                $.ajax({
+	        			type : 'POST',
+	        			url : '${contextPath}/member/naverlogin.do',
+	        			data : { memberId: memberId, email: email },
+	        			dataType : 'json',
+	        			success :function(data){
+	        				if(data.isLogOn == true){
+	        					alert("로그인 되었습니다.");
+	        					location.href='${contextPath}/main/main.do'
+	        				}else {
+	        					alert("로그인에 실패했습니다.2");
+							}      			
+	        			},
+	        		    error: function(xhr, status, error) {
+	        		        alert("로그인에 실패했습니다.1: " + error);
+	        		    }
+	                });
 				
 	            } else {
 	                alert("가입에 실패했습니다.1");

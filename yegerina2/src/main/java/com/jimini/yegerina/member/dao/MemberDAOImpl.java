@@ -26,6 +26,7 @@ public class MemberDAOImpl implements MemberDAO {
 		System.out.println(loginMap + " : memberDAO에 들어온 ID,PW");
 		System.out.println(loginMap.toString() + " : toString으로 확인한 DAO에 들어온 ID,PW");
 		System.out.println(loginMap.get("memberId") + " : 들어온 id확인(dao)");
+		System.out.println(loginMap.get("email") + " : 들어온 email확인(dao)");
 
 		MemberVO member=(MemberVO)sqlSession.selectOne("mapper.member.login",loginMap);
 		// mapper.member.login은 MyBatis의 네임스페이스와 SQL 매핑 구문의 ID, 해당 ID에 매핑된 SQL 문이 실행
@@ -79,7 +80,8 @@ public class MemberDAOImpl implements MemberDAO {
 	    System.out.println("DAO에서 쿼리문돌고 나온 네이버커넥션체크 : " + (naverConnectionCheck != null ? naverConnectionCheck.toString() : "null"));
 
 	    // 만약 naverConnectionCheck이 null 또는 빈 문자열인 경우에는 null로 설정
-	    if (naverConnectionCheck == null || naverConnectionCheck.getNaverLogin() == null || naverConnectionCheck.getNaverLogin().isEmpty()) {
+	    if (naverConnectionCheck == null) {
+//    	if (naverConnectionCheck == null || naverConnectionCheck.getNaverLogin() == null || naverConnectionCheck.getNaverLogin().isEmpty()) {
 	        naverConnectionCheck = null;
 	    }
 

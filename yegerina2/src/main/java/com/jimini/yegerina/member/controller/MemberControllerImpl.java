@@ -93,15 +93,29 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			System.out.println("네이버커넥션 null값일때 진입");
 			model.addAttribute("email",apiJson.get("email"));
 			return "/member/setdataForm";
+			
+			
 		}else if(naverConnectionCheck.getNaverLogin() == null &&naverConnectionCheck.getEmail() != null) { //아이디 가입 되어있고 네이버 연동 안되어 있을시
 			System.out.println("이메일은 있지만 네이버로그인이 안되어있을시 진입");
 			memberService.setNaverConnection(apiJson);
-			MemberVO memberInfo = memberService.userNaverLoginPro(apiJson);
+			MemberVO memberInfo =  memberService.userNaverLoginPro(apiJson);
+			if (memberInfo != null && memberInfo.getNaverLogin() != null) {
+			    session.setAttribute("naverLoginStatus", "loggedIn");
+			}
 			session.setAttribute("memberInfo", memberInfo);
+			session.setAttribute("isLogOn", true);
+			
+			
 		}else { //모두 연동 되어있을시
 			System.out.println("이메일, 네이버로그인이 다 되어있을시 진입");
 			MemberVO memberInfo =  memberService.userNaverLoginPro(apiJson);
+			
+			if (memberInfo != null && memberInfo.getNaverLogin() != null) {
+			    session.setAttribute("naverLoginStatus", "loggedIn");
+			}
 			session.setAttribute("memberInfo", memberInfo);
+			session.setAttribute("isLogOn", true);
+
 		}
 		
 		return  "redirect:/main/main.do";
@@ -139,18 +153,25 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	// 컨트롤러 클래스 또는 메서드에 웹 요청 경로를 매핑하는데 사용되는 어노테이션
 	// 특정 URL 경로에 해당하는 요청을 처리하는 메서드를 지정할 수 있음.
 	// value : 매핑할 URL 경로, method : 요청의 HTTP 메서드 타입 지정
-	
-	public ModelAndView login(@RequestParam MemberVO memberId,@RequestParam MemberVO email,	
+	@ResponseBody
+	public Map<String, Object> naverlogin(@RequestParam Map<String, String> loginMap,	
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		System.out.println("네이버로그인으로 들어온 아이디 : " + memberId);
-		System.out.println("네이버로그인으로 들어온 이메일 : " + email);
+		System.out.println("네이버로그인으로 들어온 아이디+이메일@@@@@: " + loginMap);
+		Map resultMap = new HashMap();
 		
-		ModelAndView mav = new ModelAndView();
-		
-		
-		mav.setViewName("redirect:/main/main.do");
-		return mav;
+		memberVO=memberService.login(loginMap);
+		if(memberVO!= null && memberVO.getMemberId()!=null){
+			HttpSession session=request.getSession();
+			session.setAttribute("isLogOn", true);
+			session.setAttribute("memberInfo",memberVO);
+			resultMap.put("isLogOn", true);
+		}else {
+			System.out.println("실패했을시");
+			resultMap.put("isLogOn", false);
+		}
+
+		return resultMap;
 	}
 	
 	
