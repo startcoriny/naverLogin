@@ -28,11 +28,8 @@
 		
 		<!-- 빈의 프로퍼티를 설정하는 요소 -->
 		<property name="locations">
-			<list>
 				<!-- 프로퍼티의 값으로 사용될 값을 지정 -->
 				<value>/WEB-INF/config/jdbc/jdbc.properties</value>
-				<value>/WEB-INF/config/static/api.properties</value>
-			</list>
 		</property>
 
 	</bean>
