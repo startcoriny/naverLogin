@@ -23,14 +23,19 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 @Component
 public class NaverLoginBO {
 	
+	// 네이버 API를 사용하기 위한 클라이언트 시크릿(CLIENT_SECRET)을 저장하는 필드.
     private String CLIENT_SECRET = "NpFu2fwsy9";
     
+    // 네이버 API를 사용하기 위한 클라이언트 아이디(CLIENT_ID)를 저장하는 필드.
     private String CLIENT_ID = "bg9V8xIEHNevTgi36ulQ";
 	
 	
-	
+	/* 네이버 로그인 인증 후에 사용자를 리디렉션할 URL을 저장하는 필드 */ 
 	private final static String REDIRECT_URI = "http://localhost:8090/yegerina/member/userNaverLoginPro.do";
+	
+	/* 세션에 저장할 때 사용할 세션 키(key)를 저장하는 필드, 세션 유효성 검사를 위한 난수값이 여기에 저장됨. */
 	private final static String SESSION_STATE = "oauth_state";
+	
 	/* 프로필 조회 API URL */
 	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
 
@@ -49,15 +54,17 @@ public class NaverLoginBO {
 		
 		
 		/* Scribe에서 제공하는 인증 URL 생성 기능을 이용하여 네아로 인증 URL 생성 */
-	OAuth20Service oauthService = new ServiceBuilder()
+		OAuth20Service oauthService = new ServiceBuilder()
 				.apiKey(CLIENT_ID)
 				.apiSecret(CLIENT_SECRET)
 				.callback(REDIRECT_URI)
 				.state(state) //앞서 생성한 난수값을 인증 URL생성시 사용함
 				.build(NaverLoginApi.instance());
-				return oauthService.getAuthorizationUrl();
+		return oauthService.getAuthorizationUrl();
 	}
  
+	
+	
 	/* 네이버아이디로 Callback 처리 및  AccessToken 획득 Method */
 	public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException{
 		/* Callback으로 전달받은 세선검증용 난수값과 세션에 저장되어있는 값이 일치하는지 확인 */
